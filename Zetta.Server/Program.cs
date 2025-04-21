@@ -16,7 +16,7 @@ builder.Services.AddDbContext<Context>(op =>
 
 #endregion
 
-#region Construcion de la app
+#region Construccion de la app
 
 var app = builder.Build();
 
