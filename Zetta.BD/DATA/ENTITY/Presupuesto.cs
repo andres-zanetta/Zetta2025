@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,9 @@ namespace Zetta.BD.DATA.ENTITY
     {
         public int MyProperty { get; set; }
 
-        public DateTime Fecha { get; set; }
+        [Required(ErrorMessage = "La fecha de alta es obligatoria.")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
+        public DateTime FechaAlta { get; set; }
 
         //public char Estado { get; set; } // Aceptado, Rechazado, Pendiente
 
