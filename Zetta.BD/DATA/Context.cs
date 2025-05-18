@@ -11,9 +11,7 @@ namespace Zetta.BD.DATA
     public class Context : DbContext
     {
         public DbSet <Presupuesto> Presupuestos{ get; set; }
-        public DbSet<Persona> Personas { get; set; }
-
-
+       
         public Context(DbContextOptions options) : base(options)
         {
 
