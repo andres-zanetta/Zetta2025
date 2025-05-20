@@ -11,6 +11,8 @@ namespace Zetta.BD.DATA.ENTITY
 {
     public class Presupuesto:EntityBase
     {
+        public bool Aceptado { get; set; } = false; /*esto es para saber si el presupuesto fue aceptado o no, por defecto es falso*/
+
         public string Item { get; set; }
 
         [Precision(18, 2)]
@@ -35,8 +37,8 @@ namespace Zetta.BD.DATA.ENTITY
             Tarjeta,
             MercadoPagoConLink
         }
+        
 
-      
     }
 }
 
