@@ -14,8 +14,6 @@ namespace Zetta.BD.DATA
     {
         public int Id { get; set; }
 
-        public DateTime FechaCreacion { get; set; } = DateTime.Now;
-        public DateTime? FechaModificacion { get; set; }
     }
 
 }
