@@ -13,11 +13,22 @@ namespace Zetta.BD.DATA.ENTITY
         public int PresupuestoId { get; set; }
         public Presupuesto Presupuesto { get; set; }
 
-        public int? ProfesionalId { get; set; }
-        public Profesional Profesional { get; set; }
-
+   
         public DateTime FechaInicio { get; set; }
-        public DateTime FechaFin { get; set; }
+
+        public string Comentarios { get; set; } // Comentarios adicionales sobre la obra
+
+
+        Cliente Cliente { get; set; }
     }
+
+//    //Diccionario 
+//    | Nombre          | Tipo       | Descripción                                      |
+//| --------------- | ---------- | ------------------------------------------------ |
+//| `Estado`        | `string`   | Estado actual: iniciada, en proceso, finalizada. |
+//| `PresupuestoId` | `int`      | Presupuesto relacionado.                         |
+//| `ProfesionalId` | `int?`     | Profesional asignado (opcional).                 |
+//| `FechaInicio`   | `DateTime` | Fecha de comienzo de la obra.                    |
+//| `FechaFin`      | `DateTime` | Fecha de finalización.                           |
 
 }

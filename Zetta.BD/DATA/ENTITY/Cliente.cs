@@ -16,5 +16,13 @@ namespace Zetta.BD.DATA.ENTITY
 
         public ICollection<Presupuesto> Presupuestos { get; set; }
     }
-
+    //Diccionario
+    //| Nombre      | Tipo     | Descripción                    |
+    //| ----------- | -------- | ------------------------------ |
+    //| `Id`        | `int`    | Identificador único.           |
+    //| `Nombre`    | `string` | Nombre y apellido del cliente. |
+    //| `Direccion` | `string` | Domicilio del cliente.         |
+    //| `Localidad` | `string` | Ciudad o barrio del cliente.   |
+    //| `Telefono`  | `string` | Teléfono de contacto.          |
+    //| `Email`     | `string` | Correo electrónico.            |
 }

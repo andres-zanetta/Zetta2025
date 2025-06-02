@@ -5,7 +5,7 @@
 namespace Zetta.BD.Migrations
 {
     /// <inheritdoc />
-    public partial class Obra_Profesional : Migration
+    public partial class Z1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

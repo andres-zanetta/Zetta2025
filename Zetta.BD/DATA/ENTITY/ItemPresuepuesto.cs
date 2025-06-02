@@ -20,4 +20,15 @@ namespace Zetta.BD.DATA.ENTITY
         public bool IncluyeMateriales { get; set; }
     }
 
+    //Diccionario
+//    | Nombre              | Tipo      | Descripción                                      |
+//| ------------------- | --------- | ------------------------------------------------ |
+//| `Descripcion`       | `string`  | Detalle del trabajo, ítem o servicio.            |
+//| `Cantidad`          | `int`     | Número de unidades.                              |
+//| `PrecioUnitario`    | `decimal` | Precio por unidad.                               |
+//| `Subtotal`          | `decimal` | Resultado de cantidad \* precio.                 |
+//| `IncluyeMateriales` | `bool`    | Si el ítem incluye materiales o no.              |
+//| `Categoria`         | `string`  | Clasificación (ej: electricidad, gas, plomería). |
+
+
 }

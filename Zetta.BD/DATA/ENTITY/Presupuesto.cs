@@ -6,12 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Zetta.BD.DATA.ENTITY
 {
-    public class Presupuesto:EntityBase
+    public class Presupuesto : EntityBase
     {
-        public bool Aceptado { get; set; } = false; /*esto es para saber si el presupuesto fue aceptado o no, por defecto es falso*/
+        public string RubroObra { get; set; } // electricidad, gas, etc.
+        public bool Aceptado { get; set; } = false;
 
         public string Item { get; set; }
 
@@ -21,15 +26,22 @@ namespace Zetta.BD.DATA.ENTITY
         public string Observacion { get; set; }
 
         public int Cantidad { get; set; }
-        
+
         [Precision(18, 2)]
         public decimal Total { get; set; }
 
-        public DateTime FechaInicioP { get; set; } = DateTime.Now; /*esto es para el inicio de la fecha actual del presupuesto*/
+        [Precision(18, 2)]
+        public decimal ManodeObra { get; set; } = 0.00m;
 
-        public DateTime FechaFinP { get; set; } = DateTime.Now.AddDays(30); /*esto es para la fecha de fin del presupuesto, se le suma 30 dias a la fecha actual*/
-    
-        public string ValidacionDias { get; set; } = "30"; /*esto es para la validacion de los dias del presupuesto, se le suma 30 dias a la fecha actual*/
+        [Precision(18, 2)]
+        public decimal MaterialesP { get; set; } = 0.00m;
+
+        [Precision(18, 2)]
+        public decimal TotalP { get; set; } = 0.00m;
+
+        public string TiempoAproximadoDeObra { get; set; } = "0";
+
+        public string ValidacionDias { get; set; } = "30";
 
         public enum OpcionDePago
         {
@@ -37,8 +49,6 @@ namespace Zetta.BD.DATA.ENTITY
             Tarjeta,
             MercadoPagoConLink
         }
-        
-
     }
 }
 
@@ -48,4 +58,16 @@ namespace Zetta.BD.DATA.ENTITY
 2 es la escala (la cantidad de dígitos que van después del punto decimal).
 
 */
-    #endregion
+//| Nombre | Tipo | Descripción |
+//| ---------------- | ---------- | -------------------------------------------- |
+//| `Id`             | `int`      | Identificador único.                         |
+//| `Aceptado`       | `bool`     | Indica si fue aprobado por el cliente.       |
+//| `FechaInicioP`   | `DateTime` | Fecha de creación o validez del presupuesto. |
+//| `FechaFinP`      | `DateTime` | Fecha límite para aceptación o finalización. |
+//| `ValidacionDias` | `string`   | Días de validez del presupuesto.             |
+//| `Observacion`    | `string`   | Notas internas o aclaraciones.               |
+//| `MetodoPago`     | `enum`     | Tipo de pago: contado, transferencia o link. |
+//| `Total`          | `decimal`  | Monto total del presupuesto.                 |
+//| `ClienteId`      | `int`      | Relación con el cliente.                     |
+
+#endregion
