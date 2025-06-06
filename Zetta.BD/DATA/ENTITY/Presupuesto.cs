@@ -19,6 +19,7 @@ namespace Zetta.BD.DATA.ENTITY
         public bool Aceptado { get; set; } = false;
 
         public string Item { get; set; }
+        public decimal Subtotal => Cantidad * PrecioUnitario;
 
         [Precision(18, 2)]
         public decimal PrecioUnitario { get; set; }
