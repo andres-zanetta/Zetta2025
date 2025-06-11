@@ -15,60 +15,75 @@ namespace Zetta.BD.DATA.ENTITY
 {
     public class Presupuesto : EntityBase
     {
-        public string RubroObra { get; set; } // electricidad, gas, etc.
-        public bool Aceptado { get; set; } = false;
+        public Rubro Rubro { get; set; } // Categoría principal del presupuesto (ej: Gas, Electricidad).
+        public bool Aceptado { get; set; } = false; // Estado de aceptación del presupuesto por el cliente.
 
-        public string Item { get; set; }
-        public decimal Subtotal => Cantidad * PrecioUnitario;
+        // PROPIEDAD CLAVE PARA LA RELACIÓN MUCHOS A MUCHOS
+        // Representa la colección de ítems detallados que componen este presupuesto.
+        // Cada PresupuestoItemDetalle contendrá la cantidad y el precio del ítem de catálogo.
+        public List<PresItemDetalle> ItemsDetalle { get; set; } = new List<PresItemDetalle>();
 
-        [Precision(18, 2)]
-        public decimal PrecioUnitario { get; set; }
+        // Propiedad calculada para el subtotal de los ítems en el presupuesto.
+        // Suma el resultado de (PrecioUnitario * Cantidad) de cada PresupuestoItemDetalle.
+        [Precision(18, 2)] // Define la precisión y escala para el tipo decimal en la base de datos.
+        public decimal Subtotal => ItemsDetalle?.Sum(i => (i.PrecioUnitario * i.Cantidad)) ?? 0;
 
-        public string Observacion { get; set; }
-
-        public int Cantidad { get; set; }
-
-        [Precision(18, 2)]
-        public decimal Total { get; set; }
-
-        [Precision(18, 2)]
-        public decimal ManodeObra { get; set; } = 0.00m;
+        public string? Observacion { get; set; } // Notas o comentarios adicionales.
 
         [Precision(18, 2)]
-        public decimal MaterialesP { get; set; } = 0.00m;
+        public decimal Total { get; set; } // Monto total final del presupuesto.
 
         [Precision(18, 2)]
-        public decimal TotalP { get; set; } = 0.00m;
+        public decimal? ManodeObra { get; set; } = 0.00m; // Costo estimado de mano de obra.
 
-        public string TiempoAproximadoDeObra { get; set; } = "0";
+        [Precision(18, 2)]
+        public decimal TotalP { get; set; } = 0.00m; // Campo adicional para otro cálculo de total si es necesario.
 
-        public string ValidacionDias { get; set; } = "30";
+        public string TiempoAproxObra { get; set; } = "0"; // Tiempo estimado para la ejecución de la obra.
 
-        public enum OpcionDePago
-        {
-            Contado,
-            Tarjeta,
-            MercadoPagoConLink
-        }
+        public string ValidacionDias { get; set; } = "30"; // Días de validez del presupuesto.
+        public OpcionDePago OpcionDePago { get; set; } // Opción de pago seleccionada.
+    }
+
+    // Enumeración para las opciones de pago.
+    public enum OpcionDePago
+    {
+        Contado,
+        Tarjeta,
+        MercadoPagoConLink
+    }
+
+    // Enumeración para los rubros.
+    public enum Rubro
+    {
+        Gas,
+        Electricidad,
+        Refrigeracion,
+        Solar,
+        Plomeria
     }
 }
 
 #region Diccionario
+
 /*18 es la precisión total (número máximo de dígitos, incluidos los enteros y los decimales).
 
 2 es la escala (la cantidad de dígitos que van después del punto decimal).
 
-*/
-//| Nombre | Tipo | Descripción |
-//| ---------------- | ---------- | -------------------------------------------- |
-//| `Id`             | `int`      | Identificador único.                         |
-//| `Aceptado`       | `bool`     | Indica si fue aprobado por el cliente.       |
-//| `FechaInicioP`   | `DateTime` | Fecha de creación o validez del presupuesto. |
-//| `FechaFinP`      | `DateTime` | Fecha límite para aceptación o finalización. |
-//| `ValidacionDias` | `string`   | Días de validez del presupuesto.             |
-//| `Observacion`    | `string`   | Notas internas o aclaraciones.               |
-//| `MetodoPago`     | `enum`     | Tipo de pago: contado, transferencia o link. |
-//| `Total`          | `decimal`  | Monto total del presupuesto.                 |
-//| `ClienteId`      | `int`      | Relación con el cliente.                     |
+// | Nombre           | Tipo                | Descripción                                                                 |
+// |------------------|---------------------|-----------------------------------------------------------------------------|
+// | Id               | int                 | Identificador único del presupuesto.                                        |
+// | Rubro            | Rubro               | Categoría principal del presupuesto (ej: Gas, Electricidad, etc.).          |
+// | Aceptado         | bool                | Indica si el presupuesto fue aceptado por el cliente.                       |
+// | ItemsDetalle     | List<PresItemDetalle>| Lista de ítems detallados (cantidad y precio de cada ítem en el presupuesto).|
+// | Subtotal         | decimal             | Suma de (PrecioUnitario * Cantidad) de todos los ítems del presupuesto.     |
+// | Observacion      | string?             | Notas o comentarios adicionales.                                            |
+// | Total            | decimal             | Monto total final del presupuesto.                                          |
+// | ManodeObra       | decimal?            | Costo estimado de mano de obra.                                             |
+// | TotalP           | decimal             | Campo adicional para otro cálculo de total si es necesario.                 |
+// | TiempoAproxObra  | string              | Tiempo estimado para la ejecución de la obra.                               |
+// | ValidacionDias   | string              | Días de validez del presupuesto.                                            |
+// | OpcionDePago     | OpcionDePago        | Opción de pago seleccionada (Contado, Tarjeta, MercadoPagoConLink, etc.).   |
 
+*/
 #endregion
