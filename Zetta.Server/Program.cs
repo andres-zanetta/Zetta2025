@@ -14,6 +14,18 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<Context>(op =>
     op.UseSqlServer("name=conn"));
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirOrigenWeb",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5500", "http://127.0.0.1:5500") // Agrega aquí la URL donde tu frontend se ejecutará
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 #endregion
 
 #region Construccion de la app
@@ -28,6 +40,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("PermitirOrigenWeb");
 
 app.UseAuthorization();
 
