@@ -1,0 +1,7 @@
+{
+  "/api/ItemPresupuesto": { // CAMBIO AQUÍ: Se agregó "api/" para coincidir con el controlador.
+    "target": "https://localhost:7025",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

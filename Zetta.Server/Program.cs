@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore; 
-using Zetta.BD.DATA; 
+using Microsoft.EntityFrameworkCore;
+using Zetta.BD.DATA;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,22 +11,20 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 builder.Services.AddDbContext<Context>(op =>
     op.UseSqlServer("name=conn"));
-
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("PermitirOrigenWeb",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5500", "http://127.0.0.1:5500") 
+            // ¡CORREGIDO: Ahora apunta al puerto 4200 de tu Angular!
+            policy.WithOrigins("http://localhost:4200")
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
 });
-
 
 var app = builder.Build();
 
@@ -37,15 +35,14 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("PermitirOrigenWeb"); // Si tienes CORS configurado
+app.UseCors("PermitirOrigenWeb"); // Aplica la política CORS
 app.UseAuthorization();
 
+// *** ¡MUY IMPORTANTE! ***
+// Se han ELIMINADO TODAS LAS LÍNEAS RELACIONADAS CON SPA (AngularCliServer, UseSpa, MapFallbackToFile, AddSpaStaticFiles, etc.)
+// porque estás ejecutando Angular por separado con 'ng serve'.
+// El backend AHORA solo se encargará de servir tu API.
 
-app.UseStaticFiles(); // Habilita servir archivos de wwwroot
-app.UseRouting();
-app.MapControllers(); 
-
-
-app.MapFallbackToFile("index.html");
+app.MapControllers(); // Solo para mapear tus controladores API (ej. ItemPresupuestoController)
 
 app.Run();
