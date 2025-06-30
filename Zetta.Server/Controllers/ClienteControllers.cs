@@ -35,7 +35,10 @@ namespace Zetta.Server.Controllers
                                         .FirstOrDefaultAsync(c => c.Id == id);
 
             if (cliente == null)
+            {
                 return NotFound("Cliente no encontrado.");
+            }
+               
 
             return Ok(cliente);
         }
