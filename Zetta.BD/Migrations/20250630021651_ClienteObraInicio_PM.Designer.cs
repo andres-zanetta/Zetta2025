@@ -12,8 +12,8 @@ using Zetta.BD.DATA;
 namespace Zetta.BD.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20250621000507_Inicio")]
-    partial class Inicio
+    [Migration("20250630021651_ClienteObraInicio_PM")]
+    partial class ClienteObraInicio_PM
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -118,10 +118,15 @@ namespace Zetta.BD.Migrations
                     b.Property<DateTime>("FechaInicio")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ObraId")
+                        .HasColumnType("int");
+
                     b.Property<int>("PresupuestoId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ObraId");
 
                     b.HasIndex("PresupuestoId");
 
@@ -210,6 +215,10 @@ namespace Zetta.BD.Migrations
 
             modelBuilder.Entity("Zetta.BD.DATA.ENTITY.Obra", b =>
                 {
+                    b.HasOne("Zetta.BD.DATA.ENTITY.Obra", null)
+                        .WithMany("Obras")
+                        .HasForeignKey("ObraId");
+
                     b.HasOne("Zetta.BD.DATA.ENTITY.Presupuesto", "Presupuesto")
                         .WithMany()
                         .HasForeignKey("PresupuestoId")
@@ -248,6 +257,11 @@ namespace Zetta.BD.Migrations
             modelBuilder.Entity("Zetta.BD.DATA.ENTITY.Cliente", b =>
                 {
                     b.Navigation("Presupuestos");
+                });
+
+            modelBuilder.Entity("Zetta.BD.DATA.ENTITY.Obra", b =>
+                {
+                    b.Navigation("Obras");
                 });
 
             modelBuilder.Entity("Zetta.BD.DATA.ENTITY.Presupuesto", b =>

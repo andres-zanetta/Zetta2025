@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Zetta.BD.Migrations
 {
     /// <inheritdoc />
-    public partial class Inicio : Migration
+    public partial class ClienteObraInicio_PM : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -86,11 +86,17 @@ namespace Zetta.BD.Migrations
                     Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PresupuestoId = table.Column<int>(type: "int", nullable: false),
                     FechaInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Comentarios = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Comentarios = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ObraId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Obras", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Obras_Obras_ObraId",
+                        column: x => x.ObraId,
+                        principalTable: "Obras",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Obras_Presupuestos_PresupuestoId",
                         column: x => x.PresupuestoId,
@@ -126,6 +132,11 @@ namespace Zetta.BD.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Obras_ObraId",
+                table: "Obras",
+                column: "ObraId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Obras_PresupuestoId",
