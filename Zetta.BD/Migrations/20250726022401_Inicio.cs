@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Zetta.BD.Migrations
 {
     /// <inheritdoc />
-    public partial class ClienteObraInicio_PM : Migration
+    public partial class Inicio : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -43,7 +43,7 @@ namespace Zetta.BD.Migrations
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Fabricante = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Marca = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechActuPrecio = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    FechActuPrecio = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,10 +83,10 @@ namespace Zetta.BD.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EstadoObra = table.Column<int>(type: "int", nullable: false),
                     PresupuestoId = table.Column<int>(type: "int", nullable: false),
                     FechaInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Comentarios = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Comentarios = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ObraId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>

@@ -9,7 +9,7 @@ namespace Zetta.BD.DATA.ENTITY
 {
     public class Obra : EntityBase
     {
-        public string Estado { get; set; } // Iniciada, En Proceso, Finalizada
+        public EstadoObra EstadoObra { get; set; } // Iniciada, En Proceso, Finalizada
 
         public int PresupuestoId { get; set; }
         public Presupuesto Presupuesto { get; set; }
@@ -17,7 +17,7 @@ namespace Zetta.BD.DATA.ENTITY
    
         public DateTime FechaInicio { get; set; }
 
-        public string Comentarios { get; set; } // Comentarios adicionales sobre la obra
+        public string? Comentarios { get; set; } // Comentarios adicionales sobre la obra
 
 
         Cliente Cliente { get; set; }
@@ -25,13 +25,20 @@ namespace Zetta.BD.DATA.ENTITY
         public ICollection<Obra> Obras { get; set; }
     }
 
-//    //Diccionario 
-//    | Nombre          | Tipo       | Descripción                                      |
-//| --------------- | ---------- | ------------------------------------------------ |
-//| `Estado`        | `string`   | Estado actual: iniciada, en proceso, finalizada. |
-//| `PresupuestoId` | `int`      | Presupuesto relacionado.                         |
-//| `ProfesionalId` | `int?`     | Profesional asignado (opcional).                 |
-//| `FechaInicio`   | `DateTime` | Fecha de comienzo de la obra.                    |
-//| `FechaFin`      | `DateTime` | Fecha de finalización.                           |
+    public enum EstadoObra
+    {
+        Iniciada,
+        EnProceso,
+        Finalizada
+    }
+
+    //    //Diccionario 
+    //    | Nombre          | Tipo       | Descripción                                      |
+    //| --------------- | ---------- | ------------------------------------------------ |
+    //| `Estado`        | `string`   | Estado actual: iniciada, en proceso, finalizada. |
+    //| `PresupuestoId` | `int`      | Presupuesto relacionado.                         |
+    //| `ProfesionalId` | `int?`     | Profesional asignado (opcional).                 |
+    //| `FechaInicio`   | `DateTime` | Fecha de comienzo de la obra.                    |
+    //| `FechaFin`      | `DateTime` | Fecha de finalización.                           |
 
 }

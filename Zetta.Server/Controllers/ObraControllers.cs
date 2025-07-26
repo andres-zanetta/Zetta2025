@@ -70,7 +70,7 @@ namespace Zetta.Server.Controllers
             if (dbObra == null)
                 return NotFound("Obra no encontrada.");
 
-            dbObra.Estado = obra.Estado;
+            dbObra.EstadoObra = obra.EstadoObra;
             dbObra.PresupuestoId = obra.PresupuestoId;
             dbObra.FechaInicio = obra.FechaInicio;
             dbObra.Comentarios = obra.Comentarios;

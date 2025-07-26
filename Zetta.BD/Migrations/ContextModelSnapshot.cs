@@ -17,7 +17,7 @@ namespace Zetta.BD.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.4")
+                .HasAnnotation("ProductVersion", "9.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -68,7 +68,7 @@ namespace Zetta.BD.Migrations
                     b.Property<string>("Fabricante")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("FechActuPrecio")
+                    b.Property<DateTime>("FechActuPrecio")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Marca")
@@ -105,12 +105,10 @@ namespace Zetta.BD.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Comentarios")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Estado")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("EstadoObra")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("FechaInicio")
                         .HasColumnType("datetime2");

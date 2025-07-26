@@ -1,0 +1,57 @@
+<div style="text-align:center; padding: 20px;">
+  <h1>{{ title }}</h1>
+
+  <div *ngIf="errorMessage" style="color: red; margin-bottom: 20px; border: 1px solid red; padding: 10px; border-radius: 5px;">
+    <p><strong>¡Error de Conexión!</strong></p>
+    <p>{{ errorMessage }}</p>
+    <p>Asegúrate de que:</p>
+    <ul>
+      <li>Tu backend de .NET esté ejecutándose en <strong>`https://localhost:7025`</strong>.</li>
+      <li>La configuración de CORS en `Program.cs` de tu backend permita el origen `http://localhost:4200`.</li>
+      <li>Las rutas de tus controladores en .NET (`/WeatherForecast`, `/Cliente`, `/Obra`) coincidan con las llamadas en `api.service.ts`.</li>
+    </ul>
+  </div>
+
+  <section style="margin-top: 30px;">
+    <h2>Clientes</h2>
+    <div *ngIf="clientes.length > 0; else loadingClientes">
+      <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+        <thead>
+          <tr style="background-color: #f2f2f2;">
+            <th style="border: 1px solid #ddd; padding: 8px;">ID</th>
+            <th style="border: 1px solid #ddd; padding: 8px;">Nombre</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cliente of clientes">
+            <td style="border: 1px solid #ddd; padding: 8px;">{{ cliente.id }}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">{{ cliente.nombre }}</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #loadingClientes><p>Cargando clientes...</p></ng-template>
+  </section>
+
+  <section style="margin-top: 30px;">
+    <h2>Obras</h2>
+    <div *ngIf="obras.length > 0; else loadingObras">
+      <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+        <thead>
+          <tr style="background-color: #f2f2f2;">
+            <th style="border: 1px solid #ddd; padding: 8px;">ID</th>
+            <th style="border: 1px solid #ddd; padding: 8px;">Nombre</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let obra of obras">
+            <td style="border: 1px solid #ddd; padding: 8px;">{{ obra.id }}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">{{ obra.nombre }}</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #loadingObras><p>Cargando obras...</p></ng-template>
+  </section>
+
+</div>
