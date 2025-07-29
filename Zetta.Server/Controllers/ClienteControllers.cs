@@ -113,33 +113,17 @@ namespace Zetta.Server.Controllers
 }
 
 #region Diccionario
-/* 
 //=========================================================================
-// Nombre       | Tipo                       | Descripción
-//==============|============================|==============================================
-// Id           | int                        | Identificador único del cliente.
-// Nombre       | string?                    | Nombre del cliente. Opcional.
-// Apellido     | string?                    | Apellido del cliente. Opcional.
-// Direccion    | string?                    | Dirección del cliente. Opcional.
-// Localidad    | string?                    | Localidad del cliente (ciudad o zona). Opcional.
-// Telefono     | string                     | Teléfono de contacto del cliente. Obligatorio.
-// Email        | string?                    | Correo electrónico del cliente. Opcional.
-// Presupuestos | ICollection<Presupuesto>   | Lista de presupuestos asociados a este cliente.
+// Nombre       | Tipo                         | Descripción
+//==============|==============================|==============================================
+// Id           | int                          | Identificador único del cliente.
+// Nombre       | string?                      | Nombre del cliente. Opcional.
+// Apellido     | string?                      | Apellido del cliente. Opcional.
+// Direccion    | string?                      | Dirección del cliente. Opcional.
+// Localidad    | string?                      | Localidad del cliente (ciudad o zona). Opcional.
+// Telefono     | string                       | Teléfono de contacto del cliente. Obligatorio.
+// Email        | string?                      | Correo electrónico del cliente. Opcional.
+// Presupuestos | ICollection<Presupuesto>     | Lista de presupuestos asociados a este cliente.
 //=========================================================================
-
-/*
-//==========================================================================================================
-// Nombre de la Función     | Tipo HTTP | Ruta                           | Descripción
-//==========================|===========|================================|==========================================================
-// Get()                    | GET       | api/Cliente                    | Obtiene la lista completa de clientes registrados.
-// Post(Cliente entidad)    | POST      | api/Cliente                    | Crea un nuevo cliente en la base de datos.
-// Put(int id, Cliente entidad)
-//                          | PUT       | api/Cliente/{id}               | Modifica un cliente existente según su Id.
-// Delete(int id)           | DELETE    | api/Cliente/{id}               | Elimina un cliente del sistema a partir de su Id.
-//==========================================================================================================
-*/
-
-
-
 #endregion
 

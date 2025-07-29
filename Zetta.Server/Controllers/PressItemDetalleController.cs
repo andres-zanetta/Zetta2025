@@ -107,3 +107,17 @@ namespace Zetta.Server.Controllers
     }
 }
 
+#region Diccionario
+//==============================================================================================================
+// Nombre               | Tipo                        | Descripción
+//======================|=============================|==========================================================
+// Id                   | int                         | Identificador único del detalle.
+// PresupuestoId        | int                         | Id del presupuesto al que pertenece este detalle.
+// Presupuesto          | Presupuesto                 | Presupuesto asociado a este detalle.
+// ItemPresupuestoId    | int                         | Id del ítem de catálogo utilizado en este detalle.
+// ItemPresupuesto      | ItemPresupuesto             | Ítem de catálogo asociado a este detalle.
+// Cantidad             | int                         | Cantidad de este ítem en el presupuesto.
+// PrecioUnitario       | decimal                     | Precio unitario del ítem al momento de agregarlo.
+//==============================================================================================================
+#endregion
+

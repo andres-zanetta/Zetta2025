@@ -17,14 +17,3 @@ namespace Zetta.BD.DATA
     }
 
 }
-#region Diccionario:
-//public DateTime FechaCreacion { get; set; } = DateTime.Now;
-//👉 Marca la fecha y hora en que se creó la entidad(registro).
-
-//e completa automáticamente al crear el objeto.
-
-//Es útil para saber cuándo se hizo el presupuesto, cuándo se registró un cliente, etc.
-
-//se puede usar en reportes, ordenamientos, filtros.
-
-#endregion
