@@ -12,8 +12,8 @@ using Zetta.BD.DATA;
 namespace Zetta.BD.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20250726022401_Inicio")]
-    partial class Inicio
+    [Migration("20250805115414_PM")]
+    partial class PM
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,6 +55,31 @@ namespace Zetta.BD.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Clientes");
+                });
+
+            modelBuilder.Entity("Zetta.BD.DATA.ENTITY.Comentario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ObraId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Texto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ObraId");
+
+                    b.ToTable("Comentario");
                 });
 
             modelBuilder.Entity("Zetta.BD.DATA.ENTITY.ItemPresupuesto", b =>
@@ -106,9 +131,6 @@ namespace Zetta.BD.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Comentarios")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("EstadoObra")
                         .HasColumnType("int");
@@ -211,6 +233,13 @@ namespace Zetta.BD.Migrations
                     b.ToTable("Presupuestos");
                 });
 
+            modelBuilder.Entity("Zetta.BD.DATA.ENTITY.Comentario", b =>
+                {
+                    b.HasOne("Zetta.BD.DATA.ENTITY.Obra", null)
+                        .WithMany("Comentarios")
+                        .HasForeignKey("ObraId");
+                });
+
             modelBuilder.Entity("Zetta.BD.DATA.ENTITY.Obra", b =>
                 {
                     b.HasOne("Zetta.BD.DATA.ENTITY.Obra", null)
@@ -259,6 +288,8 @@ namespace Zetta.BD.Migrations
 
             modelBuilder.Entity("Zetta.BD.DATA.ENTITY.Obra", b =>
                 {
+                    b.Navigation("Comentarios");
+
                     b.Navigation("Obras");
                 });
 

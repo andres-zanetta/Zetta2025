@@ -17,12 +17,11 @@ namespace Zetta.BD.DATA.ENTITY
    
         public DateTime FechaInicio { get; set; }
 
-        public string? Comentarios { get; set; } // Comentarios adicionales sobre la obra
-
-
         Cliente Cliente { get; set; }
 
         public ICollection<Obra> Obras { get; set; }
+
+        public List<Comentario>? Comentarios { get; set; }
     }
 
     public enum EstadoObra

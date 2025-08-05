@@ -104,6 +104,8 @@ namespace Zetta.Server.Controllers
                 return BadRequest($"Error al eliminar el detalle: {ex.Message}");
             }
         }
+
+         
     }
 }
 

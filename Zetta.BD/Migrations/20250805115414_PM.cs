@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Zetta.BD.Migrations
 {
     /// <inheritdoc />
-    public partial class Inicio : Migration
+    public partial class PM : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -86,7 +86,6 @@ namespace Zetta.BD.Migrations
                     EstadoObra = table.Column<int>(type: "int", nullable: false),
                     PresupuestoId = table.Column<int>(type: "int", nullable: false),
                     FechaInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Comentarios = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ObraId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -133,6 +132,31 @@ namespace Zetta.BD.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Comentario",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Texto = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ObraId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comentario", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comentario_Obras_ObraId",
+                        column: x => x.ObraId,
+                        principalTable: "Obras",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comentario_ObraId",
+                table: "Comentario",
+                column: "ObraId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Obras_ObraId",
                 table: "Obras",
@@ -163,10 +187,13 @@ namespace Zetta.BD.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Obras");
+                name: "Comentario");
 
             migrationBuilder.DropTable(
                 name: "PresItemDetalles");
+
+            migrationBuilder.DropTable(
+                name: "Obras");
 
             migrationBuilder.DropTable(
                 name: "ItemPresupuestos");
