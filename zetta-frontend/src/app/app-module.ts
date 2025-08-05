@@ -3,6 +3,13 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing-module';
+import { Header } from './components/header/header';
+import { Footer } from './components/footer/footer';
+import { Items } from './pages/items/items';
+import { Presupuesto } from './pages/presupuesto/presupuesto';
+import { Obras } from './pages/obras/obras';
+import { Clientes } from './pages/clientes/clientes';
+import { Inicio } from './pages/inicio/inicio';
 
 @NgModule({
   // declarations: [
@@ -15,6 +22,15 @@ import { AppRoutingModule } from './app-routing-module';
   ],
   providers: [
     // Aquí irían providers específicos de este módulo
+  ],
+  declarations: [
+    Header,
+    Footer,
+    Items,
+    Presupuesto,
+    Obras,
+    Clientes,
+    Inicio
   ],
   // bootstrap: [AppComponent] // <-- ¡ELIMINA ESTA LÍNEA!
 })
