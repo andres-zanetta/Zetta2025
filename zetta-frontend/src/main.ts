@@ -1,19 +1,19 @@
 // src/main.ts
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideHttpClient } from '@angular/common/http'; // Para que HttpClient esté disponible
-import { provideRouter } from '@angular/router';     // Para que el enrutador esté disponible
+import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
 
-import { AppComponent } from './app/app'; // Importa tu AppComponent standalone
-import { routes } from './app/app-routing-module'; // Importa tus rutas desde app-routing-module.ts
+import { App } from './app/app'; // <-- Corregido: 'App' en lugar de 'AppComponent'
+import { routes } from './app/app-routing-module';
 
-bootstrapApplication(AppComponent, {
+bootstrapApplication(App, { // <-- Corregido: 'App' en lugar de 'AppComponent'
   providers: [
     // Proveedores globales para tu aplicación standalone
     provideHttpClient(), // Habilita el servicio HttpClient
     provideRouter(routes), // Configura el enrutador con tus rutas
 
-    // Si tenías otros providers en tu AppModule (como provideBrowserGlobalErrorListeners()),
-    // también irían aquí. Por ejemplo:
+    // Si tenías otros providers en tu AppModule, también irían aquí.
+    // Por ejemplo:
     // provideBrowserGlobalErrorListeners()
   ]
 })
