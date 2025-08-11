@@ -1,0 +1,21 @@
+<div class="container">
+  <h2>{{ esEdicion ? 'Editar Cliente' : 'Nuevo Cliente' }}</h2>
+
+  <form (ngSubmit)="guardarCliente()" #form="ngForm">
+    <label>Nombre:</label>
+    <input [(ngModel)]="cliente.nombre" name="nombre" required />
+
+    <label>Apellido:</label>
+    <input [(ngModel)]="cliente.apellido" name="apellido" />
+
+    <label>Teléfono:</label>
+    <input [(ngModel)]="cliente.telefono" name="telefono" required />
+
+    <label>Email:</label>
+    <input [(ngModel)]="cliente.email" name="email" />
+
+    <br /><br />
+    <button type="submit">{{ esEdicion ? 'Actualizar' : 'Guardar' }}</button>
+    <button type="button" (click)="cancelar()">Cancelar</button>
+  </form>
+</div>

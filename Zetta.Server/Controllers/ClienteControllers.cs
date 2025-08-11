@@ -7,7 +7,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace Zetta.Server.Controllers
 {
     [ApiController]
-    [Route("api/clientes")]
+    [Route("/api/clientes")]
     public class ClienteController : ControllerBase
     {
         private readonly Context _context;

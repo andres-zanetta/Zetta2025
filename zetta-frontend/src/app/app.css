@@ -1,0 +1,15 @@
+/* src/app/app.css */
+.page-container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.content-wrap {
+  flex: 1;
+}
+
+/* Opcional: Estilo para el main */
+main {
+  padding: 20px; /* Agrega un espacio para que el contenido no esté pegado al header o footer */
+}
