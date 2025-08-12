@@ -18,6 +18,18 @@ builder.Services.AddDbContext<Context>(op =>
     op.UseSqlServer("name=conn"));
 
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirOrigenWeb",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
+
 builder.Services.AddScoped<IItemPresupuestoRepositorio, ItemPresupuestoRepositorio>();
 builder.Services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
 builder.Services.AddScoped<IObraRepositorio, ObraRepositorio>();
