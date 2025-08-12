@@ -3,6 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Zetta.BD.DATA;
+using Zetta.BD.DATA.REPOSITORY;
+using SERVER.Repositorio;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,16 +17,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<Context>(op =>
     op.UseSqlServer("name=conn"));
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("PermitirOrigenWeb",
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:4200")
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
-});
+
+builder.Services.AddScoped<IItemPresupuestoRepositorio, ItemPresupuestoRepositorio>();
+builder.Services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
+builder.Services.AddScoped<IObraRepositorio, ObraRepositorio>();
+builder.Services.AddScoped<IItemPresupuestoRepositorio, ItemPresupuestoRepositorio>();
+
 
 var app = builder.Build();
 
