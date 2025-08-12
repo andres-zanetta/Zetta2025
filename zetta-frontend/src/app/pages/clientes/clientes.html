@@ -3,7 +3,7 @@
   
   <button class="btn-agregar" (click)="abrirFormularioNuevo()">Agregar Cliente</button>
 
-  <table class="tabla-clientes">
+  <table class="tabla-clientes" *ngIf="!cargando; else cargandoTpl">
     <thead>
       <tr>
         <th>Nombre</th>
@@ -17,13 +17,18 @@
       <tr *ngFor="let cliente of clientes">
         <td>{{ cliente.nombre }}</td>
         <td>{{ cliente.apellido }}</td>
-        <td><td>{{ cliente.telefono }}</td>
+        <td>{{ cliente.telefono }}</td>
         <td>{{ cliente.email }}</td>
         <td class="acciones">
-          <button class="btn-editar" (click)="abrirFormularioEdicion(cliente)">Editar</button>
+          <button class="btn-editar" (click)="abrirFormularioEdicion(cliente.id)">Editar</button>
           <button class="btn-eliminar" (click)="eliminarCliente(cliente.id)">Eliminar</button>
         </td>
       </tr>
     </tbody>
   </table>
+
+  <ng-template #cargandoTpl>
+    <p>Cargando clientes...</p>
+  </ng-template>
+
 </div>
