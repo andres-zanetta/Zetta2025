@@ -63,17 +63,18 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular/build:dev-server",
-          "configurations": {
-            "production": {
-              "buildTarget": "zetta-frontend:build:production"
-            },
-            "development": {
-              "buildTarget": "zetta-frontend:build:development"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
+  "builder": "@angular/build:dev-server",
+  "configurations": {
+    "production": {
+      "buildTarget": "zetta-frontend:build:production"
+    },
+    "development": {
+      "buildTarget": "zetta-frontend:build:development",
+      "proxyConfig": "proxy.conf.json" 
+    }
+  },
+  "defaultConfiguration": "development"
+},
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"
         },

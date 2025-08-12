@@ -1,3 +1,29 @@
-<p>clientes
-    
-</p>
+<div class="clientes-container">
+  <h2>Gestión de Clientes</h2>
+  
+  <button class="btn-agregar" (click)="abrirFormularioNuevo()">Agregar Cliente</button>
+
+  <table class="tabla-clientes">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Teléfono</th>
+        <th>Email</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cliente of clientes">
+        <td>{{ cliente.nombre }}</td>
+        <td>{{ cliente.apellido }}</td>
+        <td><td>{{ cliente.telefono }}</td>
+        <td>{{ cliente.email }}</td>
+        <td class="acciones">
+          <button class="btn-editar" (click)="abrirFormularioEdicion(cliente)">Editar</button>
+          <button class="btn-eliminar" (click)="eliminarCliente(cliente.id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

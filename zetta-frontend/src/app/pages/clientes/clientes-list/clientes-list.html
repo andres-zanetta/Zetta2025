@@ -1,0 +1,32 @@
+<div class="container">
+  <h2>Lista de Clientes</h2>
+  <button (click)="nuevoCliente()">➕ Nuevo Cliente</button>
+
+  <table border="1" *ngIf="!cargando; else cargandoTpl">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Teléfono</th>
+        <th>Email</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of clientes">
+        <td>{{ c.nombre }}</td>
+        <td>{{ c.apellido }}</td>
+        <td>{{ c.telefono }}</td>
+        <td>{{ c.email }}</td>
+        <td>
+          <button (click)="editarCliente(c.id)">✏️ Editar</button>
+          <button (click)="eliminarCliente(c.id)">🗑 Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #cargandoTpl>
+    <p>Cargando...</p>
+  </ng-template>
+</div>
