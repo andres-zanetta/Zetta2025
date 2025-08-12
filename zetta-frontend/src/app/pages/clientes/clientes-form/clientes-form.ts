@@ -5,20 +5,21 @@ import { ClienteService } from '../../../services/cliente';
 import { Cliente } from '../../../models/cliente.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-clientes-form',
   standalone: true,
-  imports: [ 
+  imports: [
     CommonModule,
-    FormsModule 
+    FormsModule
   ],
   templateUrl: './clientes-form.html',
   styleUrls: ['./clientes-form.css']
 })
 export class ClientesForm implements OnInit {
-  cliente: Cliente = { id: 0, telefono: '' };
+  // Corregido: inicializar la propiedad Presupuestos como un arreglo vacío
+  cliente: Cliente = { id: 0, telefono: '', presupuestos: [] }; 
   esEdicion = false;
 
   constructor(

@@ -14,6 +14,12 @@
     <label>Email:</label>
     <input [(ngModel)]="cliente.email" name="email" />
 
+    <label>Dirección:</label>
+    <input [(ngModel)]="cliente.direccion" name="direccion" />
+
+    <label>Localidad:</label>
+    <input [(ngModel)]="cliente.localidad" name="localidad" />
+
     <br /><br />
     <button type="submit">{{ esEdicion ? 'Actualizar' : 'Guardar' }}</button>
     <button type="button" (click)="cancelar()">Cancelar</button>

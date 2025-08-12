@@ -10,6 +10,8 @@
         <th>Apellido</th>
         <th>Teléfono</th>
         <th>Email</th>
+        <th>Dirección</th>
+        <th>Localidad</th>
         <th>Acciones</th>
       </tr>
     </thead>
@@ -19,6 +21,8 @@
         <td>{{ cliente.apellido }}</td>
         <td>{{ cliente.telefono }}</td>
         <td>{{ cliente.email }}</td>
+        <td>{{ cliente.direccion }}</td>
+        <td>{{ cliente.localidad }}</td>
         <td class="acciones">
           <button class="btn-editar" (click)="abrirFormularioEdicion(cliente.id)">Editar</button>
           <button class="btn-eliminar" (click)="eliminarCliente(cliente.id)">Eliminar</button>
