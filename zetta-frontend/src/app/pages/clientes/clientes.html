@@ -24,8 +24,12 @@
         <td>{{ cliente.direccion }}</td>
         <td>{{ cliente.localidad }}</td>
         <td class="acciones">
-          <button class="btn-editar" (click)="abrirFormularioEdicion(cliente.id)">Editar</button>
-          <button class="btn-eliminar" (click)="eliminarCliente(cliente.id)">Eliminar</button>
+          <button class="btn-editar" (click)="abrirFormularioEdicion(cliente.id)">
+            <fa-icon [icon]="faEdit"></fa-icon> Editar
+          </button>
+          <button class="btn-eliminar" (click)="eliminarCliente(cliente.id)">
+            <fa-icon [icon]="faTrash"></fa-icon> Eliminar
+          </button>
         </td>
       </tr>
     </tbody>
@@ -34,5 +38,4 @@
   <ng-template #cargandoTpl>
     <p>Cargando clientes...</p>
   </ng-template>
-
 </div>

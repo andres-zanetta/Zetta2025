@@ -10,7 +10,7 @@ nav a{
     padding: 10px 20px;
 }
 nav a:hover {
-    background-color: white;
+    background-color: orangered;
     color: black;
     border-radius: 20px;
 }
