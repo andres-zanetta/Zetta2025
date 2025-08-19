@@ -1,1 +1,34 @@
-<p>items</p>
+<div class="items-container">
+  <h2>Gestión de Items de Presupuesto</h2>
+  <button class="btn-agregar" (click)="abrirFormularioNuevo()">Agregar Ítem</button>
+
+  <div *ngIf="cargando; else tablaItems">
+    <p>Cargando ítems...</p>
+  </div>
+
+  <ng-template #tablaItems>
+    <table class="tabla-items">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Rubro</th>
+          <th>Medida</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items">
+          <td>{{ item.nombre }}</td>
+          <td>{{ item.precio | currency:'USD':'symbol':'1.2-2' }}</td>
+          <td>{{ item.rubro }}</td>
+          <td>{{ item.medida }}</td>
+          <td class="acciones">
+            <button class="btn-editar" (click)="abrirFormularioEdicion(item.id)">Editar</button>
+            <button class="btn-eliminar" (click)="eliminarItem(item.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-template>
+</div>

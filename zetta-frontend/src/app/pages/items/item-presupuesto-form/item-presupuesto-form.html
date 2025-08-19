@@ -1,0 +1,35 @@
+<div class="container">
+  <h2>{{ esEdicion ? 'Editar Ítem' : 'Nuevo Ítem' }}</h2>
+
+  <form (ngSubmit)="guardarItem()" #form="ngForm">
+    <label>Nombre:</label>
+    <input [(ngModel)]="item.nombre" name="nombre" required />
+
+    <label>Precio:</label>
+    <input [(ngModel)]="item.precio" name="precio" type="number" />
+
+    <label>Rubro:</label>
+    <select [(ngModel)]="item.rubro" name="rubro">
+      <option *ngFor="let rubro of rubrosDisponibles" [value]="rubro">{{ rubro }}</option>
+    </select>
+
+    <label>Medida:</label>
+    <input [(ngModel)]="item.medida" name="medida" />
+
+    <label>Material:</label>
+    <input [(ngModel)]="item.material" name="material" />
+
+    <label>Descripción:</label>
+    <textarea [(ngModel)]="item.descripcion" name="descripcion"></textarea>
+
+    <label>Fabricante:</label>
+    <input [(ngModel)]="item.fabricante" name="fabricante" />
+
+    <label>Marca:</label>
+    <input [(ngModel)]="item.marca" name="marca" />
+
+    <br /><br />
+    <button type="submit">{{ esEdicion ? 'Actualizar' : 'Guardar' }}</button>
+    <button type="button" (click)="cancelar()">Cancelar</button>
+  </form>
+</div>

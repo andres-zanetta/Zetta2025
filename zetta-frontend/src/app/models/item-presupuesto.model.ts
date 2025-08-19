@@ -1,3 +1,5 @@
+// src/app/models/item-presupuesto.model.ts
+
 export enum Rubro {
   Gas = 0,
   Electricidad = 1,
@@ -9,12 +11,12 @@ export enum Rubro {
 export interface ItemPresupuesto {
   id: number;
   nombre: string;
+  descripcion?: string;
   precio?: number;
-  rubro: Rubro;
+  rubro?: Rubro;
   medida?: string;
   material?: string;
-  descripcion?: string;
   fabricante?: string;
   marca?: string;
-  fechActuPrecio: string; // ISO date string
+  fechActuPrecio?: string; // ISO date string
 }
