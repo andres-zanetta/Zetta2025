@@ -36,7 +36,7 @@ namespace Zetta.Server.Controllers
 
             if (cliente == null)
             {
-                return NotFound("Cliente no Encontrado.");
+                return NotFound("Cliente no encontrado.");
             }
                
 
