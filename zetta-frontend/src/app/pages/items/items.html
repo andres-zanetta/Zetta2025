@@ -1,5 +1,5 @@
 <div class="items-container">
-  <h2>Gestión de Items de Presupuesto</h2>
+  <h2>Gestión de Items</h2>
   <button class="btn-agregar" (click)="abrirFormularioNuevo()">Agregar Ítem</button>
 
   <div *ngIf="cargando; else tablaItems">
@@ -14,6 +14,10 @@
           <th>Precio</th>
           <th>Rubro</th>
           <th>Medida</th>
+          <th>Descripción</th>
+          <th>Fabricante</th>
+          <th>Marca</th>
+          <th>Fecha act Precio</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -23,6 +27,10 @@
           <td>{{ item.precio | currency:'USD':'symbol':'1.2-2' }}</td>
           <td>{{ item.rubro }}</td>
           <td>{{ item.medida }}</td>
+          <td>{{ item.descripcion }}</td>
+          <td>{{ item.fabricante }}</td>
+          <td>{{ item.marca }}</td>
+          <td>{{ item.fechActuPrecio | date:'dd/mm/yyyy' }}</td>
           <td class="acciones">
             <button class="btn-editar" (click)="abrirFormularioEdicion(item.id)">Editar</button>
             <button class="btn-eliminar" (click)="eliminarItem(item.id)">Eliminar</button>

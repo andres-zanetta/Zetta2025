@@ -6,7 +6,7 @@ using Zetta.BD.DATA.ENTITY;
 namespace Zetta.SERVER.Controllers
 {
     [ApiController]
-    [Route("api/ItemPresupuesto")]
+    [Route("/api/ItemPresupuesto")]
     public class ItemPresupuestoController : ControllerBase
     {
         private readonly Context context;

@@ -64,6 +64,13 @@ export class ItemPresupuestoForm implements OnInit {
     }
   }
 
+  onPrecioChange(nuevoPrecio: number) {
+  if (this.item.precio !== nuevoPrecio) {
+    this.item.precio = nuevoPrecio;
+    this.item.fechActuPrecio = new Date().toISOString();
+  }
+}
+
   cancelar(): void {
     this.router.navigate(['/items']);
   }
