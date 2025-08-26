@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="DTOS\Comentario\" />
+    <Folder Include="DTOS\ItemPresupuesto\" />
+    <Folder Include="DTOS\PresItemDetalle\" />
+    <Folder Include="DTOS\Obra\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Zetta.BD\Zetta.BD.csproj" />
+  </ItemGroup>
+
+</Project>

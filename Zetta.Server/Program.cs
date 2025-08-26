@@ -1,18 +1,37 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
+using SERVER.Repositorio;
 using Zetta.BD.DATA;
 using Zetta.BD.DATA.REPOSITORY;
-using SERVER.Repositorio;
+using Zetta.Server.Repositorios;
 
 
 var builder = WebApplication.CreateBuilder(args);
-
+   
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped(typeof(IRepositorio<>), typeof(Repositorio<>));// <-- necesario para ejecutar los resolvers.
+builder.Services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
+builder.Services.AddScoped<IObraRepositorio, ObraRepositorio>();
+builder.Services.AddScoped<IItemPresupuestoRepositorio, ItemPresupuestoRepositorio>();
+
+//agregar repositorio de presupuesto
+
+
+
+
+
+
+
+
+
+
+
 
 builder.Services.AddDbContext<Context>(op =>
     op.UseSqlServer("name=conn"));
@@ -29,11 +48,6 @@ builder.Services.AddCors(options =>
         });
 });
 
-
-builder.Services.AddScoped<IItemPresupuestoRepositorio, ItemPresupuestoRepositorio>();
-builder.Services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
-builder.Services.AddScoped<IObraRepositorio, ObraRepositorio>();
-builder.Services.AddScoped<IItemPresupuestoRepositorio, ItemPresupuestoRepositorio>();
 
 
 var app = builder.Build();
