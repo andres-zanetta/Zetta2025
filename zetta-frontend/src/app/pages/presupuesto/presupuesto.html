@@ -1,1 +1,80 @@
-<p>presupuesto </p>
+<div class="container">
+  <h2>Crear/Editar Presupuesto</h2>
+
+  <form class="presupuesto-form">
+    <div class="form-group">
+      <label for="rubro">Rubro:</label>
+      <select id="rubro" [(ngModel)]="presupuesto.rubro" name="rubro">
+        <option [ngValue]="0">Gas</option>
+        <option [ngValue]="1">Electricidad</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+      <label for="manodeobra">Mano de Obra:</label>
+      <input type="number" id="manodeobra" [(ngModel)]="presupuesto.manodeObra" name="manodeobra" (input)="recalcularTotales()">
+    </div>
+
+    <div class="form-group">
+      <label for="tiempoObra">Tiempo Aprox. de Obra:</label>
+      <input type="text" id="tiempoObra" [(ngModel)]="presupuesto.tiempoAproxObra" name="tiempoObra">
+    </div>
+
+    </form>
+
+  <h3>Agregar Ítem</h3>
+  <div class="add-item-form">
+    <div class="form-group">
+      <label for="item">Ítem:</label>
+      <select id="item" [(ngModel)]="nuevoItemId" name="item">
+        <option [ngValue]="null" disabled>Selecciona un ítem</option>
+        <option *ngFor="let item of itemsCatalogo" [ngValue]="item.id">{{ item.nombre }}</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="cantidad">Cantidad:</label>
+      <input type="number" id="cantidad" [(ngModel)]="nuevaCantidad" name="cantidad">
+    </div>
+
+    <button (click)="agregarItem()">Agregar Ítem</button>
+  </div>
+
+  <hr>
+
+  <h3>Ítems del Presupuesto</h3>
+  <table class="items-table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Cantidad</th>
+        <th>Precio Unitario</th>
+        <th>Total</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of presupuesto.itemsDetalle">
+        <td>{{ item.itemPresupuesto?.nombre }}</td>
+        <td>{{ item.cantidad }}</td>
+        <td>{{ item.precioUnitario | currency }}</td>
+        <td>{{ (item.cantidad * item.precioUnitario) | currency }}</td>
+        <td>
+          <button (click)="eliminarItem(item.id)">Eliminar</button>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="totales">
+    <h4>Subtotal: {{ presupuesto.subtotal | currency }}</h4>
+    <h4>Mano de Obra: {{ presupuesto.manodeObra | currency }}</h4>
+    <h3>Total Final: {{ presupuesto.total | currency }}</h3>
+  </div>
+  
+  <hr>
+
+  <button class="btn-guardar" (click)="guardarPresupuesto()">Guardar Presupuesto</button>
+  <button class="btn-pdf">Generar PDF</button>
+
+</div>

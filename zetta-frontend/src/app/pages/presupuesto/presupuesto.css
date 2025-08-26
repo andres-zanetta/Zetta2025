@@ -1,0 +1,152 @@
+/* Estilos para el contenedor principal de la página de presupuesto */
+.container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+h2, h3 {
+  color: #004d40;
+  border-bottom: 2px solid #b2dfdb;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Estilos para los formularios */
+.presupuesto-form, .add-item-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+input, select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, select:focus {
+  border-color: #00897b;
+  box-shadow: 0 0 5px rgba(0, 137, 123, 0.2);
+  outline: none;
+}
+
+/* Estilos para la tabla de ítems */
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.items-table thead {
+  background-color: #e0f2f1;
+}
+
+.items-table th, .items-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.items-table th {
+  font-weight: bold;
+  color: #004d40;
+}
+
+.items-table tbody tr:nth-child(even) {
+  background-color: #f5f5f5;
+}
+
+.items-table tbody tr:hover {
+  background-color: #eaf8f7;
+}
+
+/* Estilos para los totales */
+.totales {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #e0f2f1;
+  border-radius: 8px;
+  border-left: 5px solid #00897b;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.totales h4 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #004d40;
+}
+
+.totales h3 {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+  color: orangered;
+}
+
+/* Estilos para los botones */
+button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-guardar {
+  background-color: orangered;
+  color: white;
+}
+
+.btn-guardar:hover {
+  background-color: #e64a19;
+}
+
+.btn-pdf {
+  background-color: #00897b;
+  color: white;
+  margin-left: 1rem;
+}
+
+.btn-pdf:hover {
+  background-color: #00695c;
+}
+
+.add-item-form button {
+  background-color: #00897b;
+  color: white;
+  width: auto;
+  align-self: flex-end; 
+}
+
+.add-item-form button:hover {
+  background-color: #00695c;
+}
