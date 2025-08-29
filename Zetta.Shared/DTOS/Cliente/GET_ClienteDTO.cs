@@ -1,9 +1,12 @@
-﻿using System;
+﻿// GET_ClienteDTO.cs
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Zetta.Shared.DTOS.Presupuesto; 
 
 namespace Zetta.Shared.DTOS.Cliente
 {
@@ -31,6 +34,6 @@ namespace Zetta.Shared.DTOS.Cliente
 
         [EmailAddress(ErrorMessage = "Formato de correo inválido.")]
         public string? Email { get; set; }
-
+        public ICollection<GET_PresupuestoDTO>? Presupuestos { get; set; }
     }
 }

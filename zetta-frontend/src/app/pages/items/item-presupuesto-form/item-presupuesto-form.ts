@@ -18,12 +18,14 @@ import { ItemPresupuesto, Rubro } from '../../../models/item-presupuesto.model';
   styleUrls: ['./item-presupuesto-form.css']
 })
 export class ItemPresupuestoForm implements OnInit {
+  Rubro = Rubro;
+  
   item: ItemPresupuesto = {
     id: 0,
     nombre: '',
     descripcion: '',
     precio: 0,
-    rubro: undefined,
+    rubro: 0,
     medida: '',
     material: '',
     fabricante: '',
@@ -31,7 +33,7 @@ export class ItemPresupuestoForm implements OnInit {
     fechActuPrecio: new Date().toISOString()
   };
   esEdicion = false;
-  rubrosDisponibles = ['Albañilería', 'Electricidad', 'Plomería', 'Pintura', 'Carpintería'];
+  rubrosDisponibles = Object.keys(Rubro).filter(key => isNaN(Number(key)));
 
   constructor(
     private itemPresupuestoService: ItemPresupuestoService,
@@ -51,6 +53,9 @@ export class ItemPresupuestoForm implements OnInit {
   }
 
   guardarItem(): void {
+    // Convertir el rubro a número explícitamente
+    this.item.rubro = +this.item.rubro; 
+
     if (this.esEdicion) {
       this.itemPresupuestoService.update(this.item.id, this.item).subscribe({
         next: () => this.router.navigate(['/items']),
@@ -65,11 +70,11 @@ export class ItemPresupuestoForm implements OnInit {
   }
 
   onPrecioChange(nuevoPrecio: number) {
-  if (this.item.precio !== nuevoPrecio) {
-    this.item.precio = nuevoPrecio;
-    this.item.fechActuPrecio = new Date().toISOString();
+    if (this.item.precio !== nuevoPrecio) {
+      this.item.precio = nuevoPrecio;
+      this.item.fechActuPrecio = new Date().toISOString();
+    }
   }
-}
 
   cancelar(): void {
     this.router.navigate(['/items']);

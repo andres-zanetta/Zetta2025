@@ -6,18 +6,17 @@ using Zetta.BD.DATA.ENTITY;
 using Zetta.BD.DATA.REPOSITORY;
 using Zetta.Shared.DTOS.Cliente;
 
-
 namespace Zetta.Server.Controllers
 {
     [ApiController]
-    [Route("/api/clientes")]
-    public class ClienteController : ControllerBase
+    [Route("api/[controller]")] 
+    public class ClientesController : ControllerBase
     {
         private readonly Context _context;
         private readonly IMapper _mapper;
         private readonly IClienteRepositorio _clienteRepositorio;
 
-        public ClienteController(Context context, IMapper mapper, IClienteRepositorio clienteRepositorio)
+        public ClientesController(Context context, IMapper mapper, IClienteRepositorio clienteRepositorio)
         {
             _context = context;
             _mapper = mapper;
@@ -82,7 +81,7 @@ namespace Zetta.Server.Controllers
             {
                 _context.Clientes.Update(dbCliente);
                 await _context.SaveChangesAsync();
-                return Ok("Cliente actualizado correctamente.");
+                return NoContent(); // Corregido: Retorna 204 No Content
             }
             catch (Exception ex)
             {
@@ -102,7 +101,7 @@ namespace Zetta.Server.Controllers
             {
                 _context.Clientes.Remove(cliente);
                 await _context.SaveChangesAsync();
-                return Ok("Cliente eliminado correctamente.");
+                return NoContent(); // Corregido: Retorna 204 No Content
             }
             catch (Exception ex)
             {
@@ -111,5 +110,3 @@ namespace Zetta.Server.Controllers
         }
     }
 }
-
-

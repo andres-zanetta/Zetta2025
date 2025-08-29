@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { empty, Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Presupuesto, Rubro, OpcionDePago } from '../../models/presupuesto.model';
 import { PresItemDetalle } from '../../models/pres-item-detalle.model';
@@ -21,7 +21,7 @@ import { ItemPresupuestoService } from '../../services/item-presupuesto';
 export class PresupuestoPage implements OnInit {
   presupuesto: Presupuesto = {
     id: 0,
-    rubro: Rubro.Gas,
+    rubro: 0,
     aceptado: false,
     itemsDetalle: [],
     subtotal: 0,
@@ -82,7 +82,7 @@ export class PresupuestoPage implements OnInit {
     //si el presupuesto no existe, lo crea primero.
     const createOrUpdatePresupuesto$: Observable<Presupuesto> = (this.presupuesto.id === 0)
       ? this.presupuestoService.create(this.presupuesto) // Crea el presupuesto si no tiene ID
-      : this.presupuestoService.getById(this.presupuesto.id); // Si ya tiene ID, solo obtén la referencia para el flujo
+      : this.presupuestoService.getById(this.presupuesto.id); // Si ya tiene ID, solo obtiene la referencia para el flujo
 
     createOrUpdatePresupuesto$.pipe(
       switchMap((presupuestoGuardado) => {

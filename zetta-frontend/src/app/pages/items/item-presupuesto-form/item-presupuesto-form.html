@@ -10,7 +10,7 @@
 
     <label>Rubro:</label>
     <select [(ngModel)]="item.rubro" name="rubro">
-      <option *ngFor="let rubro of rubrosDisponibles" [value]="rubro">{{ rubro }}</option>
+      <option *ngFor="let rubro of rubrosDisponibles" [value]="Rubro[rubro]">{{ rubro }}</option>
     </select>
 
     <label>Medida:</label>

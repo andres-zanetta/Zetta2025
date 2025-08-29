@@ -1,28 +1,43 @@
-﻿//using AutoMapper;
-//using Zetta.BD.DATA.ENTITY;
-//using Zetta.Shared.DTO.ClienteDTO;
-//using Zetta.Shared.DTOS.Cliente;
+﻿using AutoMapper;
+using Zetta.BD.DATA.ENTITY;
+using Zetta.Shared.DTOS.Cliente;
+using Zetta.Shared.DTOS.ItemPresupuesto;
+using Zetta.Shared.DTOS.Presupuesto; // Asegúrate de tener este 'using'
 
-//namespace Zetta.Server.Mappers
-//{
-//    public class AutoMapperProfiles : Profile
-//    {
-//        public AutoMapperProfiles()
-//        {
-//            // ======================= Cliente =======================
+namespace Zetta.Server.Mappers
+{
+    public class AutoMapperProfiles : Profile
+    {
+        public AutoMapperProfiles()
+        {
+            // ======================= Cliente =======================
+            // GET
+            CreateMap<Cliente, GET_ClienteDTO>();
 
-//            // GET
-//            CreateMap<Cliente, GET_ClienteDTO>().ForMember(dest => dest.Nombre, opt => opt.MapFrom(src =>src.Nombre));
+            // POST
+            CreateMap<POST_ClienteDTO, Cliente>();
 
-//            // POST
-//            CreateMap<POST_ClienteDTO, Cliente>()
-//                .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => $"Cliente-{src.Nombre}-{src.Apellido}"));
+            // PUT
+            CreateMap<PUT_ClienteDTO, Cliente>();
 
-//            // PUT
-//            CreateMap<PUT_ClienteDTO, Cliente>()
-//                .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => $"Cliente-{src.Nombre}-{src.Apellido}"));
+            // ======================= Presupuesto =======================
+            // GET
+            CreateMap<Presupuesto, GET_PresupuestoDTO>();
 
-//            // ======================= (Acá vas agregando más entidades/DTOs en el futuro) =======================
-//        }
-//    }
-//}
+            // POST
+            CreateMap<POST_PresupuestoDTO, Presupuesto>();
+
+            // PUT
+            CreateMap<PUT_PresupuestoDTO, Presupuesto>();
+
+            //===================== ItemPresupuesto =======================
+            CreateMap<ItemPresupuesto, GET_ItemPresupuestoDTO>();
+
+            CreateMap<POST_ItemPresupuestoDTO, ItemPresupuesto>();
+
+            CreateMap<PUT_ItemPresupuestoDTO, ItemPresupuesto>();
+
+            // ======================= (Acá vas agregando más entidades/DTOs en el futuro) =======================
+        }
+    }
+}

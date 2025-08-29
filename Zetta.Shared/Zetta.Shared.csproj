@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="DTOS\Comentario\" />
-    <Folder Include="DTOS\ItemPresupuesto\" />
     <Folder Include="DTOS\PresItemDetalle\" />
     <Folder Include="DTOS\Obra\" />
   </ItemGroup>

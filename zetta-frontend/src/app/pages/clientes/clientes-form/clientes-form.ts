@@ -19,7 +19,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ClientesForm implements OnInit {
   // Corregido: inicializar la propiedad Presupuestos como un arreglo vacío
-  cliente: Cliente = { id: 0, telefono: '', presupuestos: [] }; 
+  cliente: Cliente = { nombre: '',apellido:'', id: 0, telefono: '', presupuestos: [] }; 
   esEdicion = false;
 
   constructor(

@@ -1,37 +1,57 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Zetta.BD.DATA;
 using Zetta.BD.DATA.ENTITY;
+using Zetta.Shared.DTOS.ItemPresupuesto;
 
 namespace Zetta.SERVER.Controllers
 {
     [ApiController]
-    [Route("/api/ItemPresupuesto")]
+    [Route("api/[controller]")]
     public class ItemPresupuestoController : ControllerBase
     {
-        private readonly Context context;
+        private readonly Context _context;
+        private readonly IMapper _mapper;
 
-        public ItemPresupuestoController(Context context)
+        public ItemPresupuestoController(Context context, IMapper mapper)
         {
-            this.context = context;
+            _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/ItemPresupuesto
         [HttpGet]
-        public async Task<ActionResult<List<ItemPresupuesto>>> Get()
+        public async Task<ActionResult<List<GET_ItemPresupuestoDTO>>> Get()
         {
-            return await context.ItemPresupuestos.ToListAsync();
+            var items = await _context.ItemPresupuestos.ToListAsync();
+            var itemsDTO = _mapper.Map<List<GET_ItemPresupuestoDTO>>(items);
+            return Ok(itemsDTO);
+        }
+
+        // GET: api/ItemPresupuesto/{id}
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<GET_ItemPresupuestoDTO>> GetById(int id)
+        {
+            var item = await _context.ItemPresupuestos.FindAsync(id);
+            if (item == null)
+            {
+                return NotFound("No se encontró el ítem con ese ID.");
+            }
+            var itemDTO = _mapper.Map<GET_ItemPresupuestoDTO>(item);
+            return Ok(itemDTO);
         }
 
         // POST: api/ItemPresupuesto
         [HttpPost]
-        public async Task<ActionResult<int>> Post(ItemPresupuesto entidad)
+        public async Task<ActionResult<int>> Post([FromBody] POST_ItemPresupuestoDTO dto)
         {
             try
             {
-                context.ItemPresupuestos.Add(entidad);
-                await context.SaveChangesAsync();
-                return entidad.Id;
+                var item = _mapper.Map<ItemPresupuesto>(dto);
+                _context.ItemPresupuestos.Add(item);
+                await _context.SaveChangesAsync();
+                return Ok(item.Id);
             }
             catch (Exception e)
             {
@@ -41,37 +61,19 @@ namespace Zetta.SERVER.Controllers
 
         // PUT: api/ItemPresupuesto/{id}
         [HttpPut("{id:int}")]
-        public async Task<ActionResult> Put(int id, [FromBody] ItemPresupuesto entidad)
+        public async Task<ActionResult> Put(int id, [FromBody] PUT_ItemPresupuestoDTO dto)
         {
-            if (id != entidad.Id)
-            {
-                return BadRequest("Datos incorrectos");
-            }
-
-            var item = await context.ItemPresupuestos
-                                    .FirstOrDefaultAsync(x => x.Id == id);
-
+            var item = await _context.ItemPresupuestos.FindAsync(id);
             if (item == null)
-            {
                 return NotFound("No se encontró el ítem.");
-            }
 
-            // Asignación de valores actualizados
-            item.Nombre = entidad.Nombre;
-            item.Precio = entidad.Precio;
-            item.Rubro = entidad.Rubro;
-            item.Medida = entidad.Medida;
-            item.Material = entidad.Material;
-            item.Descripcion = entidad.Descripcion;
-            item.Fabricante = entidad.Fabricante;
-            item.Marca = entidad.Marca;
-            item.FechActuPrecio = entidad.FechActuPrecio;
+            _mapper.Map(dto, item);
 
             try
             {
-                context.ItemPresupuestos.Update(item);
-                await context.SaveChangesAsync();
-                return Ok();
+                _context.ItemPresupuestos.Update(item);
+                await _context.SaveChangesAsync();
+                return NoContent();
             }
             catch (Exception e)
             {
@@ -83,25 +85,21 @@ namespace Zetta.SERVER.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var item = await context.ItemPresupuestos.FirstOrDefaultAsync(x => x.Id == id);
+            var item = await _context.ItemPresupuestos.FindAsync(id);
 
             if (item == null)
-            {
                 return NotFound("No se encontró el ítem con ese ID.");
-            }
 
             try
             {
-                context.ItemPresupuestos.Remove(item);
-                await context.SaveChangesAsync();
-                return Ok("Ítem eliminado correctamente.");
+                _context.ItemPresupuestos.Remove(item);
+                await _context.SaveChangesAsync();
+                return NoContent(); // Corregido: retorna 204 No Content
             }
             catch (Exception e)
             {
                 return BadRequest($"Error al eliminar el ítem: {e.Message}");
             }
         }
-
     }
 }
-

@@ -13,7 +13,7 @@ export interface ItemPresupuesto {
   nombre: string;
   descripcion?: string;
   precio?: number;
-  rubro?: Rubro;
+  rubro: Rubro;
   medida?: string;
   material?: string;
   fabricante?: string;
