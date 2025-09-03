@@ -11,10 +11,12 @@ namespace Zetta.Server.Controllers
     public class ObraController : ControllerBase
     {
         private readonly IObraRepositorio _obraRepositorio;
+        private readonly Context _context; // Variable para el contexto
 
-        public ObraController(IObraRepositorio repositorio)
+        public ObraController(IObraRepositorio repositorio, Context context) // Se inyecta el contexto
         {
             this._obraRepositorio = repositorio;
+            this._context = context;
         }
 
         // Reemplaza el método Get para convertir el IEnumerable<Obra> en List<Obra>
@@ -44,8 +46,8 @@ namespace Zetta.Server.Controllers
         {
             try
             {
-                
-                return await _obraRepositorio.Insert(obra);
+                // Se asume que el método correcto es AddAsync en el repositorio
+                return await _obraRepositorio.AddAsync(obra);
             }
             catch (Exception ex)
             {
@@ -58,22 +60,15 @@ namespace Zetta.Server.Controllers
         public async Task<ActionResult> Put(int id, Obra obra)
         {
             if (id != obra.Id)
-            { return BadRequest("ID no coincide."); }
-             
-            var dbObra = await _obraRepositorio.UpdateAsync(id, obra);
+            {
+                return BadRequest("ID no coincide.");
+            }
 
-            if (dbObra == null)
-                return NotFound("Obra no encontrada.");
-
-            dbObra.EstadoObra = obra.EstadoObra;
-            dbObra.PresupuestoId = obra.PresupuestoId;
-            dbObra.FechaInicio = obra.FechaInicio;
-            dbObra.Comentarios = obra.Comentarios;
-           // dbObra.Cliente = obra.Cliente;
+            // El método UpdateAsync se llama directamente sin asignar su resultado
+            await _obraRepositorio.UpdateAsync(obra);
 
             try
             {
-                _obraRepositorio.Obras.Update(dbObra);
                 await _context.SaveChangesAsync();
                 return Ok();
             }
@@ -87,12 +82,10 @@ namespace Zetta.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var obra = await Delete(id);
-            if (obra == null)
-            { return NotFound("Obra no encontrada."); }
+            // Llama directamente al método para eliminar
+            await _obraRepositorio.DeleteAsync(id);
+
             return Ok("Obra eliminada correctamente.");
-
-
         }
     }
 }
