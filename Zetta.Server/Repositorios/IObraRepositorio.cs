@@ -9,5 +9,6 @@ namespace SERVER.Repositorio
         Task<Obra?> ObtenerObraPorIdConDetallesAsync(int id);
         Task<IEnumerable<Obra>> ObtenerObrasPorEstadoAsync(EstadoObra estado);
         Task<IEnumerable<Obra>> ObtenerObrasPorClienteAsync(int clienteId);
+        
     }
 }

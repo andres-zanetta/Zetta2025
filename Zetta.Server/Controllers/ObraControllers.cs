@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SERVER.Repositorio;
 using Zetta.BD.DATA;
 using Zetta.BD.DATA.ENTITY;
 
@@ -9,38 +10,32 @@ namespace Zetta.Server.Controllers
     [Route("api/obra")]
     public class ObraController : ControllerBase
     {
-        private readonly Context _context;
+        private readonly IObraRepositorio _obraRepositorio;
 
-        public ObraController(Context context)
+        public ObraController(IObraRepositorio repositorio)
         {
-            _context = context;
+            this._obraRepositorio = repositorio;
         }
 
-        // GET: api/Obra
+        // Reemplaza el método Get para convertir el IEnumerable<Obra> en List<Obra>
         [HttpGet]
         public async Task<ActionResult<List<Obra>>> Get()
         {
-            return await _context.Obras
-                                //.Include(o => o.Cliente)
-                                .Include(o => o.Presupuesto)
-                                .ToListAsync();
+            var obras = await _obraRepositorio.ObtenerObrasConDetallesAsync();
+            return Ok(obras.ToList());
         }
 
         // GET: api/Obra/5
-        [HttpGet("{id}")]
+        [HttpGet("GetById/{id}")]
         public async Task<ActionResult<Obra>> GetById(int id)
         {
-            var obra = await _context.Obras
-                                    //.Include(o => o.Cliente)
-                                    .Include(o => o.Presupuesto)
-                                    .FirstOrDefaultAsync(o => o.Id == id);
-
+            Obra? obra = await _obraRepositorio.ObtenerObraPorIdConDetallesAsync(id);
             if (obra == null)
             {
                 return NotFound("Obra no encontrada.");
             }
-
             return obra;
+
         }
 
         // POST: api/Obra
@@ -49,9 +44,8 @@ namespace Zetta.Server.Controllers
         {
             try
             {
-                _context.Obras.Add(obra);
-                await _context.SaveChangesAsync();
-                return obra.Id;
+                
+                return await _obraRepositorio.Insert(obra);
             }
             catch (Exception ex)
             {
@@ -60,13 +54,14 @@ namespace Zetta.Server.Controllers
         }
 
         // PUT: api/Obra/5
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(int id, Obra obra)
         {
             if (id != obra.Id)
-                return BadRequest("ID no coincide.");
+            { return BadRequest("ID no coincide."); }
+             
+            var dbObra = await _obraRepositorio.UpdateAsync(id, obra);
 
-            var dbObra = await _context.Obras.FindAsync(id);
             if (dbObra == null)
                 return NotFound("Obra no encontrada.");
 
@@ -78,7 +73,7 @@ namespace Zetta.Server.Controllers
 
             try
             {
-                _context.Obras.Update(dbObra);
+                _obraRepositorio.Obras.Update(dbObra);
                 await _context.SaveChangesAsync();
                 return Ok();
             }
@@ -92,20 +87,12 @@ namespace Zetta.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var obra = await _context.Obras.FindAsync(id);
+            var obra = await Delete(id);
             if (obra == null)
-                return NotFound("Obra no encontrada.");
+            { return NotFound("Obra no encontrada."); }
+            return Ok("Obra eliminada correctamente.");
 
-            try
-            {
-                _context.Obras.Remove(obra);
-                await _context.SaveChangesAsync();
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Error al eliminar la obra: {ex.Message}");
-            }
+
         }
     }
 }
