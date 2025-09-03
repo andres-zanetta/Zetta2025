@@ -21,7 +21,7 @@ import { ItemPresupuestoService } from '../../services/item-presupuesto';
 export class PresupuestoPage implements OnInit {
   presupuesto: Presupuesto = {
     id: 0,
-    rubro: 0,
+    rubro: Rubro.Gas,
     aceptado: false,
     itemsDetalle: [],
     subtotal: 0,
@@ -103,7 +103,7 @@ export class PresupuestoPage implements OnInit {
   private agregarItemAPresupuesto(presupuestoId: number): Observable<PresItemDetalle> {
     const itemSeleccionado = this.itemsCatalogo.find(i => i.id === this.nuevoItemId);
     if (!itemSeleccionado) {
-      return of(); // Devuelve un observable vacío si el ítem no se encuentra
+      return of(); 
     }
 
     const nuevoDetalle: PresItemDetalle = {
