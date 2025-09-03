@@ -10,6 +10,8 @@ namespace Zetta.Server.Repositorios
         Task<int> AddAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(int id);
-      
+        Task<List<T>> SelectAllAsync();
+        Task<int> Insert(T entity);
+
     }
 }

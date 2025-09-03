@@ -25,10 +25,12 @@ namespace Zetta.Server.Repositorios
         }
 
         /// <summary>
-        /// Obtiene todos los registros de la entidad T desde la base de datos.
+        /// Obtiene todos los registros de la entidad T desde la base de datos de forma asíncrona.
+        /// Utiliza Entity Framework Core para acceder a la tabla correspondiente a T y trae todos los registros.
         /// </summary>
         public async Task<List<T>> GetAllAsync()
         {
+            // Devuelve una lista de todas las entidades del tipo T
             return await _context.Set<T>().ToListAsync();
         }
 
@@ -76,6 +78,32 @@ namespace Zetta.Server.Repositorios
                 await _context.SaveChangesAsync();
             }
             // Si no existe, simplemente no hace nada
+        }
+
+        public async Task<List<T>> SelectAllAsync()
+        {
+            return await _context.Set<T>().ToListAsync();
+        }
+
+        /// <summary>
+        /// Inserta una nueva entidad en la base de datos y devuelve el identificador generado.
+        /// Utiliza reflexión para obtener el valor de la propiedad "Id" después de guardar.
+        /// </summary>
+        /// <param name="entity">Entidad a insertar</param>
+        /// <returns>Identificador generado para la entidad</returns>
+        public async Task<int> Insert(T entity)
+        {
+            // Agrega la entidad al contexto para ser insertada
+            _context.Set<T>().Add(entity);
+
+            // Guarda los cambios en la base de datos de forma asíncrona
+            await _context.SaveChangesAsync();
+
+            // Obtiene el valor de la propiedad "Id" mediante reflexión
+            var property = entity.GetType().GetProperty("Id");
+
+            // Si la propiedad existe, devuelve el valor del Id generado; si no, devuelve 0
+            return property != null ? (int)property.GetValue(entity)! : 0;
         }
     }
 }

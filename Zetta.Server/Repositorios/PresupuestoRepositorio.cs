@@ -39,7 +39,7 @@ namespace Zetta.Server.Repositorios
             // Solución: Verifica si la clase Presupuesto tiene una propiedad ClienteId (int) o similar.
             // Si existe, usa esa propiedad para filtrar. Si no existe, por favor proporciona la definición de la clase Presupuesto.
             return await _context.Presupuestos
-                .Where(p => p.ClienteId == clienteId) // <-- Usa la propiedad ClienteId si está disponible
+                .Where(p => p.Id == clienteId) // <-- Usa la propiedad Id si está disponible
                 .Include(p => p.ItemsDetalle)
                     .ThenInclude(d => d.ItemPresupuesto)
                 .Include(p => p.OpcionDePago)

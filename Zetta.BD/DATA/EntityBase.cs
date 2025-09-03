@@ -10,7 +10,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Zetta.BD.DATA
 {
-    public class EntityBase
+    public class EntityBase: IEntityBase
     {
         public int Id { get; set; }
 
