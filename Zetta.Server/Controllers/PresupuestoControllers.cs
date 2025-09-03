@@ -97,6 +97,9 @@ namespace SERVER.Controllers
             await _presupuestoRepo.DeleteAsync(id);
             return Ok("Presupuesto eliminado correctamente.");
         }
+
+        
+
     }
 }
 

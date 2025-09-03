@@ -22,7 +22,15 @@ namespace Zetta.Server.Mappers
 
             // ======================= Presupuesto =======================
             // GET
-            CreateMap<Presupuesto, GET_PresupuestoDTO>();
+            CreateMap<Presupuesto, GET_PresupuestoDTO>().ForMember(dest => dest.Rubro, opt => opt.MapFrom(src => src.Rubro))
+                .ForMember(dest => dest.OpcionDePago, opt => opt.MapFrom(src => src.OpcionDePago))
+                .ForMember(dest => dest.Total, opt => opt.MapFrom(src => $"{src.Total}"))
+                .ForMember(dest => dest.ManodeObra, opt => opt.MapFrom(src => src.ManodeObra))
+                .ForMember(dest => dest.Observacion, opt =>opt.MapFrom(src => src.Observacion))
+                .ForMember(dest => dest.TiempoAproxObra, opt => opt.MapFrom(src => src.TiempoAproxObra))
+                .ForMember(dest => dest.TotalP, opt => opt.MapFrom(src => $"{src.TotalP}"));
+
+
 
             // POST
             CreateMap<POST_PresupuestoDTO, Presupuesto>();

@@ -8,7 +8,7 @@ namespace Zetta.Server.Repositorios
     /// Permite realizar operaciones CRUD (Create, Read, Update, Delete) de manera genérica
     /// para cualquier entidad que se pase como tipo genérico T.
     /// </summary>
-    public class Repositorio<T> : IRepositorio<T> where T : class
+    public class Repositorio<T> : IRepositorio<T> where T : class,IEntityBase
     {
         /// <summary>
         /// Contexto de base de datos de Entity Framework Core.

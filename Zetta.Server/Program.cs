@@ -20,7 +20,7 @@ builder.Services.AddScoped(typeof(IRepositorio<>), typeof(Repositorio<>));
 builder.Services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
 builder.Services.AddScoped<IObraRepositorio, ObraRepositorio>();
 builder.Services.AddScoped<IItemPresupuestoRepositorio, ItemPresupuestoRepositorio>();
-
+builder.Services.AddScoped<IPresupuestoRepositorio, PresupuestoRepositorio>();
 // DbContext
 builder.Services.AddDbContext<Context>(op =>
     op.UseSqlServer("name=conn"));
