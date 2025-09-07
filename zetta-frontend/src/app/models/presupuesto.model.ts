@@ -27,4 +27,5 @@ export interface Presupuesto {
   tiempoAproxObra: string;
   validacionDias: string;
   opcionDePago: OpcionDePago;
+  clienteId?: number;
 }

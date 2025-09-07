@@ -1,13 +1,44 @@
 <div class="container">
   <h2>Crear/Editar Presupuesto</h2>
 
+  <div *ngIf="presupuesto.id === 0">
+    <div *ngIf="!clienteSeleccionado">
+      <div class="form-group-actions">
+        <button type="button" (click)="mostrarClientesExistentes()">Cliente Existente</button>
+        <button type="button" (click)="navegarANuevoCliente()">Añadir Cliente</button>
+      </div>
+    </div>
+    
+    <div *ngIf="clienteSeleccionado">
+      <h3>Cliente Seleccionado</h3>
+      <div class="cliente-info">
+        <p><strong>Nombre:</strong> {{ clienteSeleccionado.nombre }} {{ clienteSeleccionado.apellido }}</p>
+        <p><strong>Dirección:</strong> {{ clienteSeleccionado.direccion }}</p>
+        <p><strong>Teléfono:</strong> {{ clienteSeleccionado.telefono }}</p>
+        <p><strong>Email:</strong> {{ clienteSeleccionado.email }}</p>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="presupuesto.id !== 0 && clienteSeleccionado">
+    <h3>Cliente</h3>
+    <div class="cliente-info">
+      <p><strong>Nombre:</strong> {{ clienteSeleccionado.nombre }} {{ clienteSeleccionado.apellido }}</p>
+      <p><strong>Dirección:</strong> {{ clienteSeleccionado.direccion }}</p>
+      <p><strong>Teléfono:</strong> {{ clienteSeleccionado.telefono }}</p>
+      <p><strong>Email:</strong> {{ clienteSeleccionado.email }}</p>
+    </div>
+  </div>
+
+  <hr>
+
   <form class="presupuesto-form">
     <div class="form-group">
       <label for="rubro">Rubro:</label>
       <select id="rubro" [(ngModel)]="presupuesto.rubro" name="rubro">
         <option [ngValue]="0">Gas</option>
         <option [ngValue]="1">Electricidad</option>
-        </select>
+      </select>
     </div>
 
     <div class="form-group">
@@ -19,8 +50,9 @@
       <label for="tiempoObra">Tiempo Aprox. de Obra:</label>
       <input type="text" id="tiempoObra" [(ngModel)]="presupuesto.tiempoAproxObra" name="tiempoObra">
     </div>
+  </form>
 
-    </form>
+  <hr>
 
   <h3>Agregar Ítem</h3>
   <div class="add-item-form">
@@ -31,13 +63,13 @@
         <option *ngFor="let item of itemsCatalogo" [ngValue]="item.id">{{ item.nombre }}</option>
       </select>
     </div>
-    
+
     <div class="form-group">
       <label for="cantidad">Cantidad:</label>
       <input type="number" id="cantidad" [(ngModel)]="nuevaCantidad" name="cantidad">
     </div>
 
-    <button (click)="agregarItem()">Agregar Ítem</button>
+    <button type="button" (click)="agregarItem()">Agregar Ítem</button>
   </div>
 
   <hr>
@@ -60,8 +92,8 @@
         <td>{{ item.precioUnitario | currency }}</td>
         <td>{{ (item.cantidad * item.precioUnitario) | currency }}</td>
         <td>
-          <button (click)="eliminarItem(item.id)">Eliminar</button>
-          </td>
+          <button type="button" (click)="eliminarItem(item.id)">Eliminar</button>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -69,12 +101,11 @@
   <div class="totales">
     <h4>Subtotal: {{ presupuesto.subtotal | currency }}</h4>
     <h4>Mano de Obra: {{ presupuesto.manodeObra | currency }}</h4>
-    <h3>Total Final: {{ presupuesto.total | currency }}</h3>
+    <h3>Total: {{ presupuesto.total | currency }}</h3>
   </div>
-  
-  <hr>
 
-  <button class="btn-guardar" (click)="guardarPresupuesto()">Guardar Presupuesto</button>
-  <button class="btn-pdf">Generar PDF</button>
+  <div class="actions">
+    <button type="button" (click)="guardarPresupuesto()">Guardar Presupuesto</button>
+  </div>
 
 </div>
