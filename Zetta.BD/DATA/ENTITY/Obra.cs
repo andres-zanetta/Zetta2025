@@ -17,7 +17,7 @@ namespace Zetta.BD.DATA.ENTITY
    
         public DateTime FechaInicio { get; set; }
 
-        Cliente Cliente { get; set; }
+        public Cliente Cliente { get; set; }
 
         public ICollection<Obra> Obras { get; set; }
 
