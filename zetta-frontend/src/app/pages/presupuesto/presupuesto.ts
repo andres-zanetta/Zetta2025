@@ -13,7 +13,6 @@ import { ItemPresupuestoService } from '../../services/item-presupuesto';
 import { ClienteService } from '../../services/cliente';
 import { Cliente } from '../../models/cliente.model';
 
-// Interface que coincide con el DTO del backend para crear un presupuesto
 interface POST_PresupuestoDTO {
   clienteNombre: string;
   direccion: string;
@@ -108,7 +107,6 @@ export class PresupuestoPage implements OnInit {
       });
     }
 
-    // Si hay un clienteId en los queryParams, seleccionar ese cliente
     if (clienteId) {
       this.clienteService.getById(+clienteId).subscribe({
         next: (cliente) => this.clienteSeleccionado = cliente,
@@ -119,7 +117,7 @@ export class PresupuestoPage implements OnInit {
 
   // Navega al formulario de creación de cliente
   navegarANuevoCliente(): void {
-    this.router.navigate(['/clientes/crear'], { queryParams: { returnUrl: 'presupuesto' } });
+    this.router.navigate(['/clientes/nuevo'], { queryParams: { returnUrl: 'presupuesto' } });
   }
 
   seleccionarCliente(cliente: Cliente): void {
