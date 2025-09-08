@@ -21,4 +21,11 @@
     <ProjectReference Include="..\Zetta.Shared\Zetta.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resolv\ClienteR\" />
+    <Folder Include="Resolv\ItemPresupuestoR\" />
+    <Folder Include="Resolv\PresupuestoR\" />
+    <Folder Include="Resolv\ObraR\" />
+  </ItemGroup>
+
 </Project>
