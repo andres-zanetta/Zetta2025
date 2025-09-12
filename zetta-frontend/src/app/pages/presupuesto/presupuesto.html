@@ -2,10 +2,20 @@
   <h2>Crear/Editar Presupuesto</h2>
 
   <div *ngIf="presupuesto.id === 0">
-    <div *ngIf="!clienteSeleccionado">
+    <div *ngIf="!clienteSeleccionado && !mostrarListaClientes">
       <div class="form-group-actions">
         <button type="button" (click)="mostrarClientesExistentes()">Cliente Existente</button>
         <button type="button" (click)="navegarANuevoCliente()">Añadir Cliente</button>
+      </div>
+    </div>
+    
+    <div *ngIf="mostrarListaClientes">
+      <h3>Seleccionar Cliente Existente</h3>
+      <div class="cliente-list">
+        <div *ngFor="let cliente of clientes" class="cliente-item">
+          <p>{{ cliente.nombre }} {{ cliente.apellido }} ({{ cliente.telefono }})</p>
+          <button (click)="seleccionarCliente(cliente)">Seleccionar</button>
+        </div>
       </div>
     </div>
     
@@ -16,6 +26,7 @@
         <p><strong>Dirección:</strong> {{ clienteSeleccionado.direccion }}</p>
         <p><strong>Teléfono:</strong> {{ clienteSeleccionado.telefono }}</p>
         <p><strong>Email:</strong> {{ clienteSeleccionado.email }}</p>
+        <button type="button" (click)="eliminarClienteSeleccionado()">Eliminar Cliente</button>
       </div>
     </div>
   </div>
@@ -36,8 +47,9 @@
     <div class="form-group">
       <label for="rubro">Rubro:</label>
       <select id="rubro" [(ngModel)]="presupuesto.rubro" name="rubro">
-        <option [ngValue]="0">Gas</option>
-        <option [ngValue]="1">Electricidad</option>
+        <option *ngFor="let nombre of rubroNombres" [ngValue]="rubros[nombre]">
+            {{ nombre }}
+        </option>
       </select>
     </div>
 
