@@ -34,15 +34,21 @@ namespace Zetta.BD.DATA.ENTITY
         public decimal Total { get; set; } // Monto total final del presupuesto.
 
         [Precision(18, 2)]
-        public decimal? ManodeObra { get; set; } = 0.00m; // Costo estimado de mano de obra.
+        public decimal? ManodeObra { get; set; } // Costo estimado de mano de obra.
 
         [Precision(18, 2)]
-        public decimal TotalP { get; set; } = 0.00m; // Campo adicional para otro cálculo de total si es necesario.
+        public decimal TotalP { get; set; } // Campo adicional para otro cálculo de total si es necesario.
 
-        public string TiempoAproxObra { get; set; } = "0"; // Tiempo estimado para la ejecución de la obra.
+        public string TiempoAproxObra { get; set; } // Tiempo estimado para la ejecución de la obra.
 
-        public string ValidacionDias { get; set; } = "30"; // Días de validez del presupuesto.
+        public string ValidacionDias { get; set; } // Días de validez del presupuesto.
+
         public OpcionDePago OpcionDePago { get; set; } // Opción de pago seleccionada.
+
+        // Añadir estas líneas para establecer la relación con Cliente
+        public int ClienteId { get; set; } // Clave foránea para la relación con Cliente
+        public Cliente Cliente { get; set; } = null!; // Propiedad de navegación
+
     }
 
     // Enumeración para las opciones de pago.
