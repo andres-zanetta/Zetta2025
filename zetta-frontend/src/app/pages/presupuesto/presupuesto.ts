@@ -1,3 +1,5 @@
+// src/app/pages/presupuesto/presupuesto.ts
+
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +15,6 @@ import { ItemPresupuestoService } from '../../services/item-presupuesto';
 import { ClienteService } from '../../services/cliente';
 import { Cliente } from '../../models/cliente.model';
 
-// Interface que coincide con el DTO del backend para crear un presupuesto
 interface POST_PresupuestoDTO {
   clienteNombre: string;
   direccion: string;
@@ -58,6 +59,12 @@ export class PresupuestoPage implements OnInit {
   itemsCatalogo: ItemPresupuesto[] = [];
   clientes: Cliente[] = [];
   clienteSeleccionado: Cliente | null = null;
+  
+  mostrarListaClientes = false;
+  
+  // Exponer el enum Rubro en el componente para usarlo en el template
+  rubros = Rubro;
+  rubroNombres: string[] = [];
 
   nuevoItemId: number | null = null;
   nuevaCantidad: number = 1;
@@ -75,7 +82,9 @@ export class PresupuestoPage implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     const clienteId = this.route.snapshot.queryParamMap.get('clienteId');
 
-    // Cargar clientes e items del catálogo
+    // Filtra las claves del enum para obtener solo los nombres de los rubros
+    this.rubroNombres = Object.keys(this.rubros).filter(key => isNaN(Number(key)));
+
     this.clienteService.getAll().subscribe({
         next: (clientes) => this.clientes = clientes,
         error: (err) => console.error('Error al cargar clientes:', err)
@@ -86,14 +95,12 @@ export class PresupuestoPage implements OnInit {
         error: (err) => console.error('Error al cargar ítems del catálogo:', err)
     });
 
-    // Si hay un ID de presupuesto en la URL, cargar el presupuesto
     if (id) {
       this.presupuestoService.getById(+id).subscribe({
         next: (presupuesto) => {
           if (presupuesto) {
             this.presupuesto = presupuesto;
             this.recalcularTotales();
-            // Lógica para cargar el cliente del presupuesto si existe
             if (presupuesto.clienteId) {
                 this.clienteService.getById(presupuesto.clienteId).subscribe({
                     next: (cliente) => this.clienteSeleccionado = cliente,
@@ -108,7 +115,6 @@ export class PresupuestoPage implements OnInit {
       });
     }
 
-    // Si hay un clienteId en los queryParams, seleccionar ese cliente
     if (clienteId) {
       this.clienteService.getById(+clienteId).subscribe({
         next: (cliente) => this.clienteSeleccionado = cliente,
@@ -117,14 +123,21 @@ export class PresupuestoPage implements OnInit {
     }
   }
 
-  // Navega al formulario de creación de cliente
   navegarANuevoCliente(): void {
-    this.router.navigate(['/clientes/crear'], { queryParams: { returnUrl: 'presupuesto' } });
+    this.router.navigate(['/clientes/nuevo'], { queryParams: { returnUrl: 'presupuesto' } });
+  }
+
+  mostrarClientesExistentes(): void {
+    this.mostrarListaClientes = true;
+  }
+  
+  eliminarClienteSeleccionado(): void {
+    this.clienteSeleccionado = null;
   }
 
   seleccionarCliente(cliente: Cliente): void {
     this.clienteSeleccionado = cliente;
-    alert(`Cliente seleccionado: ${cliente.nombre}`);
+    this.mostrarListaClientes = false;
   }
 
   agregarItem(): void {
@@ -142,7 +155,6 @@ export class PresupuestoPage implements OnInit {
         };
         this.presupuesto.itemsDetalle.push(nuevoDetalle);
         this.recalcularTotales();
-        alert('Ítem agregado a la lista local.');
         this.nuevoItemId = null;
         this.nuevaCantidad = 1;
       } else {
@@ -157,7 +169,6 @@ export class PresupuestoPage implements OnInit {
     if (confirm('¿Estás seguro de que quieres eliminar este ítem?')) {
         this.presupuesto.itemsDetalle = this.presupuesto.itemsDetalle.filter(item => item.id !== id);
         this.recalcularTotales();
-        alert('Ítem eliminado con éxito.');
     }
   }
 
@@ -172,7 +183,6 @@ export class PresupuestoPage implements OnInit {
         return;
     }
 
-    // Adaptar el DTO para el nuevo flujo
     const postDto: POST_PresupuestoDTO = {
         clienteNombre: this.clienteSeleccionado.nombre,
         direccion: this.clienteSeleccionado.direccion,

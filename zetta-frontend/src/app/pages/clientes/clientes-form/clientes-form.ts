@@ -61,6 +61,10 @@ export class ClientesForm implements OnInit {
     }
   }
 
+    cancelar() {
+    this.router.navigate(['/clientes']);
+  }
+
   volver(): void {
     if (this.returnUrl === 'presupuesto') {
       this.router.navigate(['/presupuesto/0']);
