@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SERVER.Repositorio;
 using Zetta.BD.DATA;
 using Zetta.BD.DATA.ENTITY;
+using Zetta.Shared.DTOS.Obra; // <-- donde están tus DTOs
 
 namespace Zetta.Server.Controllers
 {
@@ -11,43 +13,47 @@ namespace Zetta.Server.Controllers
     public class ObraController : ControllerBase
     {
         private readonly IObraRepositorio _obraRepositorio;
-        private readonly Context _context; // Variable para el contexto
+        private readonly Context _context;
+        private readonly IMapper _mapper;
 
-        public ObraController(IObraRepositorio repositorio, Context context) // Se inyecta el contexto
+        public ObraController(IObraRepositorio repositorio, Context context, IMapper mapper)
         {
             this._obraRepositorio = repositorio;
             this._context = context;
+            this._mapper = mapper;
         }
 
-        // Reemplaza el método Get para convertir el IEnumerable<Obra> en List<Obra>
+        // GET: api/Obra
         [HttpGet]
-        public async Task<ActionResult<List<Obra>>> Get()
+        public async Task<ActionResult<List<GET_ObraDTO>>> Get()
         {
             var obras = await _obraRepositorio.ObtenerObrasConDetallesAsync();
-            return Ok(obras.ToList());
+            var obrasDTO = _mapper.Map<List<GET_ObraDTO>>(obras);
+            return Ok(obrasDTO);
         }
 
         // GET: api/Obra/5
         [HttpGet("GetById/{id}")]
-        public async Task<ActionResult<Obra>> GetById(int id)
+        public async Task<ActionResult<GET_ObraDTO>> GetById(int id)
         {
-            Obra? obra = await _obraRepositorio.ObtenerObraPorIdConDetallesAsync(id);
+            var obra = await _obraRepositorio.ObtenerObraPorIdConDetallesAsync(id);
             if (obra == null)
             {
                 return NotFound("Obra no encontrada.");
             }
-            return obra;
-
+            var obraDTO = _mapper.Map<GET_ObraDTO>(obra);
+            return Ok(obraDTO);
         }
 
         // POST: api/Obra
         [HttpPost]
-        public async Task<ActionResult<int>> Post(Obra obra)
+        public async Task<ActionResult<int>> Post([FromBody] POST_ObraDTO obraDTO)
         {
             try
             {
-                // Se asume que el método correcto es AddAsync en el repositorio
-                return await _obraRepositorio.AddAsync(obra);
+                var obra = _mapper.Map<Obra>(obraDTO);
+                var id = await _obraRepositorio.AddAsync(obra);
+                return Ok(id);
             }
             catch (Exception ex)
             {
@@ -57,20 +63,22 @@ namespace Zetta.Server.Controllers
 
         // PUT: api/Obra/5
         [HttpPut("{id:int}")]
-        public async Task<ActionResult> Put(int id, Obra obra)
+        public async Task<ActionResult> Put(int id, [FromBody] PUT_ObraDTO obraDTO)
         {
-            if (id != obra.Id)
+            var obraExistente = await _obraRepositorio.ObtenerObraPorIdConDetallesAsync(id);
+
+            if (obraExistente == null)
             {
-                return BadRequest("ID no coincide.");
+                return NotFound("Obra no encontrada.");
             }
 
-            // El método UpdateAsync se llama directamente sin asignar su resultado
-            await _obraRepositorio.UpdateAsync(obra);
+            var obra = _mapper.Map(obraDTO, obraExistente);
 
             try
             {
+                await _obraRepositorio.UpdateAsync(obra);
                 await _context.SaveChangesAsync();
-                return Ok();
+                return Ok("Obra actualizada correctamente.");
             }
             catch (Exception ex)
             {
@@ -82,9 +90,7 @@ namespace Zetta.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            // Llama directamente al método para eliminar
             await _obraRepositorio.DeleteAsync(id);
-
             return Ok("Obra eliminada correctamente.");
         }
     }
