@@ -5,6 +5,7 @@ using Zetta.Shared.DTOS.Cliente;
 using Zetta.Shared.DTOS.ItemPresupuesto;
 using Zetta.Shared.DTOS.Presupuesto;
 using Zetta.Shared.DTOS.PresItemDetalle;
+using Zetta.Shared.DTOS.Obra;
 
 namespace Zetta.Server.Mappers
 {
@@ -46,6 +47,29 @@ namespace Zetta.Server.Mappers
             CreateMap<ItemPresupuesto, GET_ItemPresupuestoDTO>();
             CreateMap<POST_ItemPresupuestoDTO, ItemPresupuesto>();
             CreateMap<PUT_ItemPresupuestoDTO, ItemPresupuesto>();
+
+            // ======================= Obra =======================
+            CreateMap<Obra, GET_ObraDTO>()
+                .ForMember(dest => dest.EstadoObra, opt => opt.MapFrom(src => src.EstadoObra.ToString()))
+                .ForMember(dest => dest.ClienteId, opt => opt.MapFrom(src => src.Cliente.Id))
+                .ForMember(dest => dest.ClienteNombre, opt => opt.MapFrom(src => src.Cliente.Nombre))
+                .ForMember(dest => dest.Comentarios, opt => opt.MapFrom(src => src.Comentarios != null ? src.Comentarios.Select(c => c.Texto).ToList() : null));
+            
+            CreateMap<POST_ObraDTO, Obra>()
+                .ForMember(dest => dest.EstadoObra, opt => opt.MapFrom(src => Enum.Parse<EstadoObra>(src.EstadoObra)))
+                .ForMember(dest => dest.Cliente, opt => opt.Ignore()) // Cliente se asignará en el servicio
+                .ForMember(dest => dest.Comentarios, opt => opt.Ignore()) // Comentarios se manejarán por separado
+                .ForMember(dest => dest.Presupuesto, opt => opt.Ignore()) // Presupuesto se asignará en el servicio
+                .ForMember(dest => dest.PresupuestoId, opt => opt.MapFrom(src => src.PresupuestoId))
+                .ForMember(dest => dest.FechaInicio, opt => opt.MapFrom(src => src.FechaInicio));
+
+            CreateMap<PUT_ObraDTO, Obra>()
+                .ForMember(dest => dest.EstadoObra, opt => opt.MapFrom(src => Enum.Parse<EstadoObra>(src.EstadoObra)))
+                .ForMember(dest => dest.Cliente, opt => opt.Ignore()) 
+                .ForMember(dest => dest.Comentarios, opt => opt.Ignore()) 
+                .ForMember(dest => dest.Presupuesto, opt => opt.Ignore()) 
+                .ForMember(dest => dest.FechaInicio, opt => opt.MapFrom(src => src.FechaInicio));
+
         }
     }
 }
