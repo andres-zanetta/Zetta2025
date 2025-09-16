@@ -12,8 +12,8 @@ using Zetta.BD.DATA;
 namespace Zetta.BD.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20250916123947_Primera Migracion")]
-    partial class PrimeraMigracion
+    [Migration("20250916130414_Inicio")]
+    partial class Inicio
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,31 +57,6 @@ namespace Zetta.BD.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Clientes");
-                });
-
-            modelBuilder.Entity("Zetta.BD.DATA.ENTITY.Comentario", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("ObraId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Texto")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ObraId");
-
-                    b.ToTable("Comentario");
                 });
 
             modelBuilder.Entity("Zetta.BD.DATA.ENTITY.ItemPresupuesto", b =>
@@ -235,13 +210,6 @@ namespace Zetta.BD.Migrations
                     b.ToTable("Presupuestos");
                 });
 
-            modelBuilder.Entity("Zetta.BD.DATA.ENTITY.Comentario", b =>
-                {
-                    b.HasOne("Zetta.BD.DATA.ENTITY.Obra", null)
-                        .WithMany("Comentarios")
-                        .HasForeignKey("ObraId");
-                });
-
             modelBuilder.Entity("Zetta.BD.DATA.ENTITY.Obra", b =>
                 {
                     b.HasOne("Zetta.BD.DATA.ENTITY.Cliente", "Cliente")
@@ -294,11 +262,6 @@ namespace Zetta.BD.Migrations
             modelBuilder.Entity("Zetta.BD.DATA.ENTITY.Cliente", b =>
                 {
                     b.Navigation("Presupuestos");
-                });
-
-            modelBuilder.Entity("Zetta.BD.DATA.ENTITY.Obra", b =>
-                {
-                    b.Navigation("Comentarios");
                 });
 
             modelBuilder.Entity("Zetta.BD.DATA.ENTITY.Presupuesto", b =>

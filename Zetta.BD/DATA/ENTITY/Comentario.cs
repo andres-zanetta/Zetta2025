@@ -14,5 +14,6 @@ namespace Zetta.BD.DATA.ENTITY
         public string Texto { get; set; } // Contenido del comentario
 
         public DateTime Fecha { get; set; } // Fecha y hora del comentario
+        public Obra Obra { get; set; } // Obra a la que pertenece el comentario
     }
 }

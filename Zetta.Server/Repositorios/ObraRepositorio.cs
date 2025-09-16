@@ -23,7 +23,6 @@ namespace SERVER.Repositorio
             return await _context.Obras
                 
                 .Include(o => o.Presupuesto)
-                .Include(o => o.Comentarios)
                 .ToListAsync();
         }
 
@@ -33,7 +32,6 @@ namespace SERVER.Repositorio
             return await _context.Obras
                 
                 .Include(o => o.Presupuesto)
-                .Include(o => o.Comentarios)
                 .FirstOrDefaultAsync(o => o.Id == id);
         }
 

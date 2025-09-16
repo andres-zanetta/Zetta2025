@@ -94,13 +94,11 @@ namespace Zetta.Server.Mappers
             CreateMap<Obra, GET_ObraDTO>()
                 .ForMember(dest => dest.EstadoObra, opt => opt.MapFrom(src => src.EstadoObra.ToString()))
                 .ForMember(dest => dest.ClienteId, opt => opt.MapFrom(src => src.Cliente.Id))
-                .ForMember(dest => dest.ClienteNombre, opt => opt.MapFrom(src => src.Cliente.Nombre))
-                .ForMember(dest => dest.Comentarios, opt => opt.MapFrom(src => src.Comentarios != null ? src.Comentarios.Select(c => c.Texto).ToList() : null));
+                .ForMember(dest => dest.ClienteNombre, opt => opt.MapFrom(src => src.Cliente.Nombre));
             
             CreateMap<POST_ObraDTO, Obra>()
                 .ForMember(dest => dest.EstadoObra, opt => opt.MapFrom(src => Enum.Parse<EstadoObra>(src.EstadoObra)))
                 .ForMember(dest => dest.Cliente, opt => opt.Ignore()) // Cliente se asignará en el servicio
-                .ForMember(dest => dest.Comentarios, opt => opt.Ignore()) // Comentarios se manejarán por separado
                 .ForMember(dest => dest.Presupuesto, opt => opt.Ignore()) // Presupuesto se asignará en el servicio
                 .ForMember(dest => dest.PresupuestoId, opt => opt.MapFrom(src => src.PresupuestoId))
                 .ForMember(dest => dest.FechaInicio, opt => opt.MapFrom(src => src.FechaInicio));
@@ -108,7 +106,6 @@ namespace Zetta.Server.Mappers
             CreateMap<PUT_ObraDTO, Obra>()
                 .ForMember(dest => dest.EstadoObra, opt => opt.MapFrom(src => Enum.Parse<EstadoObra>(src.EstadoObra)))
                 .ForMember(dest => dest.Cliente, opt => opt.Ignore()) 
-                .ForMember(dest => dest.Comentarios, opt => opt.Ignore()) 
                 .ForMember(dest => dest.Presupuesto, opt => opt.Ignore()) 
                 .ForMember(dest => dest.FechaInicio, opt => opt.MapFrom(src => src.FechaInicio));
 

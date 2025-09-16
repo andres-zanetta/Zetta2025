@@ -18,7 +18,6 @@ namespace Zetta.BD.DATA.ENTITY
 
         public Cliente Cliente { get; set; }
 
-        public List<Comentario>? Comentarios { get; set; }
     }
 
     public enum EstadoObra
