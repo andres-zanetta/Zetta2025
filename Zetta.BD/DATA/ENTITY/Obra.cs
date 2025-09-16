@@ -14,12 +14,9 @@ namespace Zetta.BD.DATA.ENTITY
         public int PresupuestoId { get; set; }
         public Presupuesto Presupuesto { get; set; }
 
-   
         public DateTime FechaInicio { get; set; }
 
         public Cliente Cliente { get; set; }
-
-        public ICollection<Obra> Obras { get; set; }
 
         public List<Comentario>? Comentarios { get; set; }
     }

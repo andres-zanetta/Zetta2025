@@ -12,8 +12,8 @@ using Zetta.BD.DATA;
 namespace Zetta.BD.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20250907000728_prueba")]
-    partial class prueba
+    [Migration("20250916123947_Primera Migracion")]
+    partial class PrimeraMigracion
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -134,21 +134,21 @@ namespace Zetta.BD.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
+
                     b.Property<int>("EstadoObra")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("FechaInicio")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ObraId")
-                        .HasColumnType("int");
-
                     b.Property<int>("PresupuestoId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ObraId");
+                    b.HasIndex("ClienteId");
 
                     b.HasIndex("PresupuestoId");
 
@@ -196,7 +196,7 @@ namespace Zetta.BD.Migrations
                     b.Property<bool>("Aceptado")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("ClienteId")
+                    b.Property<int>("ClienteId")
                         .HasColumnType("int");
 
                     b.Property<decimal?>("ManodeObra")
@@ -244,15 +244,19 @@ namespace Zetta.BD.Migrations
 
             modelBuilder.Entity("Zetta.BD.DATA.ENTITY.Obra", b =>
                 {
-                    b.HasOne("Zetta.BD.DATA.ENTITY.Obra", null)
-                        .WithMany("Obras")
-                        .HasForeignKey("ObraId");
+                    b.HasOne("Zetta.BD.DATA.ENTITY.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Zetta.BD.DATA.ENTITY.Presupuesto", "Presupuesto")
                         .WithMany()
                         .HasForeignKey("PresupuestoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Cliente");
 
                     b.Navigation("Presupuesto");
                 });
@@ -278,9 +282,13 @@ namespace Zetta.BD.Migrations
 
             modelBuilder.Entity("Zetta.BD.DATA.ENTITY.Presupuesto", b =>
                 {
-                    b.HasOne("Zetta.BD.DATA.ENTITY.Cliente", null)
+                    b.HasOne("Zetta.BD.DATA.ENTITY.Cliente", "Cliente")
                         .WithMany("Presupuestos")
-                        .HasForeignKey("ClienteId");
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Cliente");
                 });
 
             modelBuilder.Entity("Zetta.BD.DATA.ENTITY.Cliente", b =>
@@ -291,8 +299,6 @@ namespace Zetta.BD.Migrations
             modelBuilder.Entity("Zetta.BD.DATA.ENTITY.Obra", b =>
                 {
                     b.Navigation("Comentarios");
-
-                    b.Navigation("Obras");
                 });
 
             modelBuilder.Entity("Zetta.BD.DATA.ENTITY.Presupuesto", b =>

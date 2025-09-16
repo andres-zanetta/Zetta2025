@@ -23,9 +23,17 @@ namespace Zetta.BD.DATA
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Presupuesto>()
                 .Property(p => p.Total)
                 .HasPrecision(18, 2); // 18 dígitos en total, 2 decimales
+
+            modelBuilder.Entity<Presupuesto>()
+                .HasOne(p => p.Cliente)
+                .WithMany(c => c.Presupuestos)
+                .HasForeignKey(p => p.ClienteId)
+                .OnDelete(DeleteBehavior.Restrict); // O DeleteBehavior.NoAction
 
             // Si querés, podés hacerlo para otras propiedades similares también
         }

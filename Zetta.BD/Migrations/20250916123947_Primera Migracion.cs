@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Zetta.BD.Migrations
 {
     /// <inheritdoc />
-    public partial class PM : Migration
+    public partial class PrimeraMigracion : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,8 +17,8 @@ namespace Zetta.BD.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Direccion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Localidad = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Telefono = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -65,7 +65,7 @@ namespace Zetta.BD.Migrations
                     TiempoAproxObra = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ValidacionDias = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OpcionDePago = table.Column<int>(type: "int", nullable: false),
-                    ClienteId = table.Column<int>(type: "int", nullable: true)
+                    ClienteId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -74,7 +74,8 @@ namespace Zetta.BD.Migrations
                         name: "FK_Presupuestos_Clientes_ClienteId",
                         column: x => x.ClienteId,
                         principalTable: "Clientes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -86,16 +87,17 @@ namespace Zetta.BD.Migrations
                     EstadoObra = table.Column<int>(type: "int", nullable: false),
                     PresupuestoId = table.Column<int>(type: "int", nullable: false),
                     FechaInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ObraId = table.Column<int>(type: "int", nullable: true)
+                    ClienteId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Obras", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Obras_Obras_ObraId",
-                        column: x => x.ObraId,
-                        principalTable: "Obras",
-                        principalColumn: "Id");
+                        name: "FK_Obras_Clientes_ClienteId",
+                        column: x => x.ClienteId,
+                        principalTable: "Clientes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Obras_Presupuestos_PresupuestoId",
                         column: x => x.PresupuestoId,
@@ -158,9 +160,9 @@ namespace Zetta.BD.Migrations
                 column: "ObraId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Obras_ObraId",
+                name: "IX_Obras_ClienteId",
                 table: "Obras",
-                column: "ObraId");
+                column: "ClienteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Obras_PresupuestoId",
