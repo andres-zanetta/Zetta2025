@@ -14,9 +14,29 @@ namespace Zetta.Server.Mappers
         public AutoMapperProfiles()
         {
             // ======================= Cliente =======================
-            CreateMap<Cliente, GET_ClienteDTO>();
-            CreateMap<POST_ClienteDTO, Cliente>();
-            CreateMap<PUT_ClienteDTO, Cliente>();
+            CreateMap<Cliente, GET_ClienteDTO>() 
+                .ForMember(dest=>dest.Nombre, opt =>opt.MapFrom(src=>src.Nombre))
+                .ForMember(dest=>dest.Apellido, opt =>opt.MapFrom(src=>src.Apellido))
+                .ForMember(dest=>dest.Direccion, opt =>opt.MapFrom(src=>src.Direccion))
+                .ForMember(dest=>dest.Localidad, opt =>opt.MapFrom(src=>src.Localidad))
+                .ForMember(dest=>dest.Telefono, opt =>opt.MapFrom(src=>src.Telefono))
+                .ForMember(dest=>dest.Email, opt=>opt.MapFrom(src=>src.Email));
+
+            CreateMap<POST_ClienteDTO, Cliente>()
+                .ForMember(dest => dest.Nombre, opt => opt.MapFrom(src => src.Nombre))
+                .ForMember(dest => dest.Apellido, opt => opt.MapFrom(src => src.Apellido))
+                .ForMember(dest => dest.Direccion, opt => opt.MapFrom(src => src.Direccion))
+                .ForMember(dest => dest.Localidad, opt => opt.MapFrom(src => src.Localidad))
+                .ForMember(dest => dest.Telefono, opt => opt.MapFrom(src => src.Telefono))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email));
+
+            CreateMap<PUT_ClienteDTO, Cliente>()
+                .ForMember(dest => dest.Nombre, opt => opt.MapFrom(src => src.Nombre))
+                .ForMember(dest => dest.Apellido, opt => opt.MapFrom(src => src.Apellido))
+                .ForMember(dest => dest.Direccion, opt => opt.MapFrom(src => src.Direccion))
+                .ForMember(dest => dest.Localidad, opt => opt.MapFrom(src => src.Localidad))
+                .ForMember(dest => dest.Telefono, opt => opt.MapFrom(src => src.Telefono))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email));
 
             // ======================= Presupuesto =======================
             // GET
@@ -31,16 +51,38 @@ namespace Zetta.Server.Mappers
 
             // POST
             CreateMap<POST_PresupuestoDTO, Presupuesto>()
-                .ForMember(dest => dest.Subtotal, opt => opt.Ignore());
+                .ForMember(dest => dest.Subtotal, opt => opt.Ignore())
+                .ForMember(dest => dest.Rubro, opt => opt.MapFrom(src => src.Rubro))
+                .ForMember(dest => dest.OpcionDePago, opt => opt.MapFrom(src => src.OpcionDePago))
+                .ForMember(dest => dest.Total, opt => opt.MapFrom(src => src.Total))
+                .ForMember(dest => dest.ManodeObra, opt => opt.MapFrom(src => src.ManodeObra))
+                .ForMember(dest => dest.Observacion, opt => opt.MapFrom(src => src.Observacion))
+                .ForMember(dest => dest.TiempoAproxObra, opt => opt.MapFrom(src => src.TiempoAproxObra))
+                .ForMember(dest => dest.TotalP, opt => opt.MapFrom(src => src.TotalP));
 
             // PUT
             CreateMap<PUT_PresupuestoDTO, Presupuesto>()
-                .ForMember(dest => dest.Subtotal, opt => opt.Ignore());
+                .ForMember(dest => dest.Subtotal, opt => opt.Ignore())
+                .ForMember(dest => dest.Rubro, opt => opt.MapFrom(src => src.Rubro))
+                .ForMember(dest => dest.OpcionDePago, opt => opt.MapFrom(src => src.OpcionDePago))
+                .ForMember(dest => dest.Total, opt => opt.MapFrom(src => src.Total))
+                .ForMember(dest => dest.ManodeObra, opt => opt.MapFrom(src => src.ManodeObra))
+                .ForMember(dest => dest.Observacion, opt => opt.MapFrom(src => src.Observacion))
+                .ForMember(dest => dest.TiempoAproxObra, opt => opt.MapFrom(src => src.TiempoAproxObra))
+                .ForMember(dest => dest.TotalP, opt => opt.MapFrom(src => src.TotalP));
 
 
             // ======================= PresItemDetalle =======================
-            CreateMap<POST_PresItemDetalleDTO, PresItemDetalle>();
-            CreateMap<PUT_PresItemDetalleDTO, PresItemDetalle>();
+            CreateMap<POST_PresItemDetalleDTO, PresItemDetalle>()
+                .ForMember(dest => dest.Cantidad, opt => opt.MapFrom(src => src.Cantidad))
+                .ForMember(dest => dest.PrecioUnitario, opt => opt.MapFrom(src => src.PrecioUnitario))
+                .ForMember(dest => dest.ItemPresupuestoId, opt => opt.MapFrom(src => src.ItemPresupuestoId));
+
+
+            CreateMap<PUT_PresItemDetalleDTO, PresItemDetalle>()
+                .ForMember(dest => dest.Cantidad, opt => opt.MapFrom(src => src.Cantidad))
+                .ForMember(dest => dest.PrecioUnitario, opt => opt.MapFrom(src => src.PrecioUnitario))
+                .ForMember(dest => dest.ItemPresupuestoId, opt => opt.MapFrom(src => src.ItemPresupuestoId));
 
 
             // ======================= ItemPresupuesto =======================
