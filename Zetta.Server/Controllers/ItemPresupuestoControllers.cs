@@ -3,18 +3,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Zetta.BD.DATA;
 using Zetta.BD.DATA.ENTITY;
+using Zetta.BD.DATA.REPOSITORY;
 using Zetta.Shared.DTOS.ItemPresupuesto;
 
 namespace Zetta.SERVER.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/itempresupuesto")]
     public class ItemPresupuestoController : ControllerBase
     {
         private readonly Context _context;
         private readonly IMapper _mapper;
+        private readonly IItemPresupuestoRepositorio _itemPresupuestoRepositorio;
 
-        public ItemPresupuestoController(Context context, IMapper mapper)
+        public ItemPresupuestoController(IItemPresupuestoRepositorio repositorio, Context context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -24,7 +26,7 @@ namespace Zetta.SERVER.Controllers
         [HttpGet]
         public async Task<ActionResult<List<GET_ItemPresupuestoDTO>>> Get()
         {
-            var items = await _context.ItemPresupuestos.ToListAsync();
+            var items = await _itemPresupuestoRepositorio.GetAllAsync();
             var itemsDTO = _mapper.Map<List<GET_ItemPresupuestoDTO>>(items);
             return Ok(itemsDTO);
         }
@@ -33,7 +35,7 @@ namespace Zetta.SERVER.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult<GET_ItemPresupuestoDTO>> GetById(int id)
         {
-            var item = await _context.ItemPresupuestos.FindAsync(id);
+            var item = await _itemPresupuestoRepositorio.GetByIdAsync(id);
             if (item == null)
             {
                 return NotFound("No se encontró el ítem con ese ID.");
@@ -49,9 +51,8 @@ namespace Zetta.SERVER.Controllers
             try
             {
                 var item = _mapper.Map<ItemPresupuesto>(dto);
-                _context.ItemPresupuestos.Add(item);
-                await _context.SaveChangesAsync();
-                return Ok(item.Id);
+                var id = await _itemPresupuestoRepositorio.AddAsync(item);
+                return Ok(id);
             }
             catch (Exception e)
             {
@@ -63,7 +64,7 @@ namespace Zetta.SERVER.Controllers
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(int id, [FromBody] PUT_ItemPresupuestoDTO dto)
         {
-            var item = await _context.ItemPresupuestos.FindAsync(id);
+            var item = await _itemPresupuestoRepositorio.GetByIdAsync(id);
             if (item == null)
                 return NotFound("No se encontró el ítem.");
 
@@ -71,8 +72,7 @@ namespace Zetta.SERVER.Controllers
 
             try
             {
-                _context.ItemPresupuestos.Update(item);
-                await _context.SaveChangesAsync();
+                await _itemPresupuestoRepositorio.UpdateAsync(item);
                 return NoContent();
             }
             catch (Exception e)
@@ -85,16 +85,15 @@ namespace Zetta.SERVER.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var item = await _context.ItemPresupuestos.FindAsync(id);
+            var item = await _itemPresupuestoRepositorio.GetByIdAsync(id);
 
             if (item == null)
                 return NotFound("No se encontró el ítem con ese ID.");
 
             try
             {
-                _context.ItemPresupuestos.Remove(item);
-                await _context.SaveChangesAsync();
-                return NoContent(); // Corregido: retorna 204 No Content
+                await _itemPresupuestoRepositorio.DeleteAsync(id);
+                return NoContent();
             }
             catch (Exception e)
             {
