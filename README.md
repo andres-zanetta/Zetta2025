@@ -1,10 +1,5 @@
 # Zetta2025
-💼 ZETTA SERVICIOS
-Sistema de Gestión de Presupuestos y Obras Técnicas
-Proyecto en desarrollo para automatizar y mejorar la administración de presupuestos, clientes y obras en rubros como electricidad, gas, plomería, refrigeración, etc.
-
-📌 Descripción
-Zetta Servicios es una solución integral orientada a pequeñas empresas técnicas, técnicos independientes o pymes que brindan servicios de instalación y mantenimiento. El sistema permite:
+Solución integral orientada a pequeñas empresas técnicas, técnicos independientes o pymes que brindan servicios de instalación y mantenimiento. El sistema permite:
 
 Registrar y gestionar clientes.
 
