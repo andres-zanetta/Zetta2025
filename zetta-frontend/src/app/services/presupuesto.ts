@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Presupuesto } from '../models/presupuesto.model';
@@ -8,7 +9,7 @@ import { Presupuesto } from '../models/presupuesto.model';
   providedIn: 'root'
 })
 export class PresupuestoService {
-  private apiUrl = 'api/presupuestos';
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -18,35 +19,35 @@ export class PresupuestoService {
   }
 
   getAll(): Observable<Presupuesto[]> {
-    return this.http.get<Presupuesto[]>(this.apiUrl)
+    return this.http.get<Presupuesto[]>(this.baseUrl)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   getById(id: number): Observable<Presupuesto> {
-    return this.http.get<Presupuesto>(`${this.apiUrl}/${id}`)
+    return this.http.get<Presupuesto>(`${this.baseUrl}/${id}`)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   create(presupuesto: Presupuesto): Observable<number> {
-    return this.http.post<number>(this.apiUrl, presupuesto)
+    return this.http.post<number>(this.baseUrl, presupuesto)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   update(id: number, presupuesto: Presupuesto): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, presupuesto)
+    return this.http.put<any>(`${this.baseUrl}/${id}`, presupuesto)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`)
+    return this.http.delete<void>(`${this.baseUrl}/${id}`)
       .pipe(
         catchError(this.handleError)
       );

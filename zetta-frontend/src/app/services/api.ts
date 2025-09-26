@@ -1,6 +1,7 @@
 // src/app/services/api.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,8 +9,8 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
   // Ajusta la URL base para incluir el prefijo 'api'.
-  // Esto hará que todas las llamadas comiencen con https://localhost:7025/api
-  private baseUrl = 'https://localhost:7025/api';
+  // Esto hará que todas las llamadas comiencen con 
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 

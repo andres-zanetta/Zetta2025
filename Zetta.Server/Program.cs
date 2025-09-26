@@ -6,7 +6,7 @@ using SERVER.Repositorio;
 using Zetta.BD.DATA;
 using Zetta.BD.DATA.REPOSITORY;
 using Zetta.Server.Repositorios;
-using AutoMapper; 
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,25 +21,30 @@ builder.Services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
 builder.Services.AddScoped<IObraRepositorio, ObraRepositorio>();
 builder.Services.AddScoped<IItemPresupuestoRepositorio, ItemPresupuestoRepositorio>();
 builder.Services.AddScoped<IPresupuestoRepositorio, PresupuestoRepositorio>();
+
 // DbContext
 builder.Services.AddDbContext<Context>(op =>
     op.UseSqlServer("name=conn"));
 
-
+// AutoMapper
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddMaps(AppDomain.CurrentDomain.GetAssemblies());
 });
 
-
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("PermitirOrigenWeb",
         policy =>
         {
-            policy.WithOrigins("http://localhost:4200")
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
+            policy.WithOrigins(
+                "http://localhost:4200",                // local angular
+                "https://zetta-frontend.vercel.app",    // vercel prod (luego reemplazas por el real)
+                "http://www.ZettaServicios.somee.com"   // API en somee
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod();
         });
 });
 

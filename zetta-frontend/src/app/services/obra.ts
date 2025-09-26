@@ -1,27 +1,35 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { Obra } from '../models/obra.model';
 
-@Injectable({ providedIn: 'root' })
+
+@Injectable({
+  providedIn: 'root'
+})
 export class ObraService {
-  private baseUrl = 'https://localhost:5001/api/obras';
+  private baseUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  getAll(): Observable<Obra[]> {
-    return this.http.get<Obra[]>(this.baseUrl);
+  getObras(): Observable<Obra[]> {
+    return this.http.get<Obra[]>(`${this.baseUrl}/obras`);
   }
-  getById(id: number): Observable<Obra> {
-    return this.http.get<Obra>(`${this.baseUrl}/${id}`);
+
+  getObra(id: number): Observable<Obra> {
+    return this.http.get<Obra>(`${this.baseUrl}/obras/${id}`);
   }
-  create(obra: Obra): Observable<Obra> {
-    return this.http.post<Obra>(this.baseUrl, obra);
+
+  addObra(obra: Obra): Observable<Obra> {
+    return this.http.post<Obra>(`${this.baseUrl}/obras`, obra);
   }
-  update(id: number, obra: Obra): Observable<void> {
-    return this.http.put<void>(`${this.baseUrl}/${id}`, obra);
+
+  updateObra(id: number, obra: Obra): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/obras/${id}`, obra);
   }
-  delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+
+  deleteObra(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/obras/${id}`);
   }
 }
