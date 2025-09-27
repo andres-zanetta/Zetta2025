@@ -40,7 +40,8 @@ builder.Services.AddCors(options =>
         {
             policy.WithOrigins(
                 "http://localhost:4200",                // local angular
-                "https://zetta2025.vercel.app",    // vercel prod (luego reemplazas por el real)
+                "zetta2025.netlify.app",            // netlify prod 
+                "https://zetta2025.vercel.app",    // vercel prod 
                 "http://www.ZettaServicios.somee.com"   // API en somee
             )
             .AllowAnyHeader()
